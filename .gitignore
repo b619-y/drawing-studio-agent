@@ -1,0 +1,26 @@
+# Research inputs and generated deliverables stay local by default.
+input/*
+!input/索引.md
+output/*
+!output/README.md
+!output/图/
+!output/表/
+!output/脚本/
+!output/报告/
+output/图/**
+output/表/**
+output/脚本/**
+output/报告/**
+!output/图/.gitkeep
+!output/表/.gitkeep
+!output/脚本/.gitkeep
+!output/报告/.gitkeep
+figures/*
+!figures/README.md
+
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
