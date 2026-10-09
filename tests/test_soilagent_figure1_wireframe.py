@@ -45,8 +45,8 @@ class WireframeTests(unittest.TestCase):
         axes = self.nodes["decision-axes"]
         self.assertEqual(axes.get("data-state"), "empty-placeholder")
         self.assertFalse(any(n.tag in {NS + "circle", NS + "ellipse", NS + "image"} for n in axes.iter()))
-        self.assertIn("No candidate points", self.text)
-        for word in ["TIME", "COST", "FLUX", "CONC → color"]:
+        self.assertIn("Decision axes contain no candidate data", self.root.find(NS + "desc").text)
+        for word in ["TIME", "COST", "FLUX", "Color: CONC"]:
             self.assertIn(word, self.text)
 
     def test_conceptual_and_draft_labels(self):
@@ -85,6 +85,22 @@ class WireframeTests(unittest.TestCase):
             subscript = node.find(NS + "tspan")
             self.assertEqual(subscript.text, str(index))
             self.assertGreater(float(subscript.get("dy")), 0)
+
+    def test_right_side_text_hierarchy(self):
+        time = self.nodes["rtm-summary-time"]
+        mass = self.nodes["rtm-summary-mass"]
+        color = self.nodes["decision-color-key"]
+        output = self.nodes["model-response-label"]
+        request = self.nodes["candidate-request-label"]
+        scheme = self.nodes["candidate-schemes-label"]
+        self.assertEqual(time.get("x"), mass.get("x"))
+        self.assertEqual(mass.get("y"), color.get("y"))
+        self.assertLess(float(mass.get("y")), float(output.get("y")))
+        self.assertLess(float(output.get("y")), float(request.get("y")))
+        self.assertLess(float(request.get("y")), float(scheme.get("y")))
+        self.assertEqual(color.get("x"), scheme.get("x"))
+        self.assertEqual(output.text, "Outputs")
+        self.assertEqual(request.text, "Plans")
 
     def test_no_external_refs(self):
         for node in self.root.iter():

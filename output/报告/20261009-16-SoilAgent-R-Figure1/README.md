@@ -1,6 +1,6 @@
 # SoilAgent-R Figure 1：第一阶段结构审阅
 
-任务：[Issue #2](https://github.com/b619-y/drawing-studio-agent/issues/2)。2026-10-09用户认可总体结构，并要求改为yyc字体、安装真正Arial。当前完成**结构草图的字体修订**，不是正式投稿图，也不关闭Issue。本轮不自动展开真实数据制图。
+任务：[Issue #2](https://github.com/b619-y/drawing-studio-agent/issues/2)。2026-10-09用户认可总体结构，并要求改为yyc字体、安装真正Arial；随后反馈3、4部分文字混乱。当前完成**结构草图的字体与右侧文字排版修订**，不是正式投稿图，也不关闭Issue。本轮不自动展开真实数据制图。
 
 ## 本轮设计
 
@@ -21,6 +21,16 @@ Twin没有真实尺度、井位或浓度色标，标明 `Conceptual illustration
 - 导出前检查真正Arial Bold及所有可见字符，导出后核对PDF字体为`Arial-BoldMT`。若缺Arial或发生字体回退，检查会失败，不静默生成替代版。
 - 原DejaVu版保存在上一提交`15b1316`，可以通过Git比较和恢复，不另公开字体二进制。
 
+## 3、4部分文字整理
+
+按`scansci-svg`局部编辑规范，保护0/1/2、Arial Bold、配色、模型符号和三轴几何，仅调整右侧说明与交互线的布局：
+
+- RTM的`Time evolution`、`Mass checks`集中在其图形下方；Decision的`Color: CONC`与左侧摘要底行对齐。
+- 两条交互箭头集中在独立下方带：`Outputs`表示RTM模型响应，`Plans`表示MOPSO候选请求，方向不变。
+- `Candidate schemes`归入Decision下方；门控状态说明放在caption/依据表，不挤在图面。
+- 空坐标状态未改变，无候选点声明保留于SVG描述、caption及文档；没有因删减画面文字而增加虚构数据。
+- 最终PDF的六个独立标签各出现一次，文字包围盒无碰撞；仍需目视判断箭头、轴及图形间的整体关系。
+
 ## 成果与来源
 
 - [科学依据表](../../表/20261009-16-SoilAgent-R-Figure1/20261009-16-元素与科学依据.md)。
@@ -35,7 +45,7 @@ Twin没有真实尺度、井位或浓度色标，标明 `Conceptual illustration
 
 自动检查包括SVG唯一ID、五模块唯一、禁止位图/随机点/额外Agent、箭头拓扑、原生文字、PDF物理尺寸/无图像对象、字体及虚线保留、重新渲染及源码SHA。实际回执见[QA JSON](20261009-16-结构草图-QA.json)。
 
-- 15项回归测试通过（原13项＋字体及原生下标回归）；scansci结构检查通过。关系XML未改，上一轮drawio严格检查0错误、0警告仍适用于原文件，本轮不重复桌面导出。
+- 16项回归测试通过（原13项＋字体、原生下标及右侧文本层级回归）；scansci结构检查通过。关系XML未改，上一轮drawio严格检查0错误、0警告仍适用于原文件，本轮不重复桌面导出。
 - PDF为180×82 mm，原生矢量、无图像对象；仅使用`Arial-BoldMT`。主体文字最小7.37 pt，两个时间下标6.24 pt；字体子集嵌入，两条虚线确实保留，所有可见字符都有Arial字形。
 - 最终PNG由最终PDF重渲染；绘制者已目视核对字体、虚线、箭头、留白及无明显遮挡/裁切。独立只读复核未发现新的实质科学语义问题。
 - 未执行：draw.io桌面导出/交互编辑、特定期刊投稿规格检查、实体打印审阅；正式科学验收仍待进行。自动检查不能代替这些环节。
@@ -61,4 +71,4 @@ scansci与drawio检查器由执行环境提供，不拷贝第三方脚本进此P
 
 ## English caption（结构草图）
 
-**Figure 1. Evidence-grounded architecture of SoilAgent-R.** Site information is organized through Auto-ETL, a conceptual site model (CSM), three-dimensional digital-twin construction, reactive transport modelling (RTM), and multi-objective decision support. The CSM-to-twin connection represents methodological guidance rather than a claimed automated file interface. Candidate requests and model responses connect MOPSO with RTM; the four objectives are concentration (CONC), cumulative transport (FLUX), cost (COST), and engineering duration (TIME). The conceptual block is not to scale and does not encode measured concentrations. The decision axes are a layout placeholder without candidate points. Dashed feedback denotes user revision of goals, not an autonomous real-time control loop. New reconstruction candidates are currently No-Go for replacing the retained RTM input.
+**Figure 1. Evidence-grounded architecture of SoilAgent-R.** Site information is organized through Auto-ETL, a conceptual site model (CSM), three-dimensional digital-twin construction, reactive transport modelling (RTM), and multi-objective decision support. The CSM-to-twin connection represents methodological guidance rather than a claimed automated file interface. The Outputs and Plans links denote RTM model responses and MOPSO candidate requests, respectively. The four objectives are concentration (CONC), cumulative transport (FLUX), cost (COST), and engineering duration (TIME). Candidate schemes remain screening-level and subject to formal evaluation gates, not validated engineering optima. The conceptual block is not to scale and does not encode measured concentrations. The decision axes are a layout placeholder without candidate points. Dashed feedback denotes user revision of goals, not an autonomous real-time control loop. New reconstruction candidates are currently No-Go for replacing the retained RTM input.

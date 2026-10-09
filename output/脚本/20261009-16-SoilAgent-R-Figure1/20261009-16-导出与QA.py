@@ -63,7 +63,7 @@ def export(repo: Path) -> dict:
     converted_bytes = cairosvg.svg2pdf(url=str(source))
     with pymupdf.open("pdf", converted_bytes) as document:
         page = document[0]
-        document.set_metadata({"title": "SoilAgent-R Figure 1 — structure draft", "author": "Drawing studio", "subject": "Conceptual illustration; yyc Arial Bold revision; not publication final"})
+        document.set_metadata({"title": "SoilAgent-R Figure 1 — structure draft", "author": "Drawing studio", "subject": "Conceptual illustration; RTM/Decision layout revision; not publication final"})
         document.save(figures / f"{STEM}.pdf", garbage=4, deflate=True)
         pixmap = page.get_pixmap(matrix=pymupdf.Matrix(4, 4), alpha=False)
         pixmap.save(figures / f"{STEM}.png")
@@ -79,6 +79,14 @@ def export(repo: Path) -> dict:
         drawings = page.get_drawings()
         dashed_paths = sum(bool(d.get("dashes")) and not d["dashes"].startswith("[]") for d in drawings)
         fonts = sorted({s["font"] for s in spans})
+        # 对本轮右侧整理的六个独立标签，用最终PDF字体度量检查文字碰撞。
+        right_labels = ["Time evolution", "Mass checks", "Color: CONC", "Outputs", "Plans", "Candidate schemes"]
+        right_rects = {label: page.search_for(label) for label in right_labels}
+        collisions = []
+        for index, first in enumerate(right_labels):
+            for second in right_labels[index + 1:]:
+                if any((a & b).get_area() > 0.5 for a in right_rects[first] for b in right_rects[second]):
+                    collisions.append([first, second])
         checks = {
             "svg_unique_ids": True,
             "svg_no_raster_or_filter": True,
@@ -90,11 +98,13 @@ def export(repo: Path) -> dict:
             "pdf_only_time_subscripts_below_7pt": len(small_spans) == 2 and {s["text"].strip() for s in small_spans} == {"0", "1"} and min_font >= 6.0,
             "pdf_arial_bold_no_fallback": all("Arial" in f and "Bold" in f for f in fonts),
             "pdf_dashed_guidance_and_feedback_preserved": dashed_paths >= 2,
+            "pdf_right_labels_present_once": all(len(boxes) == 1 for boxes in right_rects.values()),
+            "pdf_right_labels_no_text_collision": not collisions,
             "pdf_width_180mm": abs(rect.width * 25.4 / 72 - 180) < 0.01,
             "pdf_height_82mm": abs(rect.height * 25.4 / 72 - 82) < 0.01,
         }
         receipt = {
-            "stage": "structure_draft_yyc_font_revision",
+            "stage": "structure_draft_right_side_layout_revision",
             "source": source.relative_to(repo).as_posix(),
             "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
             "backend": f"CairoSVG {cairosvg.__version__}; PyMuPDF {pymupdf.VersionBind} for PDF QA/render",
@@ -110,6 +120,8 @@ def export(repo: Path) -> dict:
             "pdf_dashed_paths": dashed_paths,
             "pdf_image_objects": len(page.get_images(full=True)),
             "clipped_text": clipped,
+            "right_label_boxes_pt": {label: [list(box) for box in boxes] for label, boxes in right_rects.items()},
+            "right_label_collisions": collisions,
             "png_size_pixels": [pixmap.width, pixmap.height],
             "not_checked_by_this_script": ["visual_layout", "scientific_acceptance", "drawio_desktop_export", "journal_specific_submission_rules"],
         }

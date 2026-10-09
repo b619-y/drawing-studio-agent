@@ -64,8 +64,8 @@
       </g>
       <text id="rtm-time-0" x="1317" y="343" data-time-index="0">t<tspan font-size="22" dy="8">0</tspan></text>
       <text id="rtm-time-1" x="1317" y="426" data-time-index="1">t<tspan font-size="22" dy="8">1</tspan></text>
-      <text x="1275" y="480" text-anchor="middle">Time evolution</text>
-      <text x="1275" y="675" text-anchor="middle">Mass checks</text>
+      <text id="rtm-summary-time" x="1275" y="510" text-anchor="middle">Time evolution</text>
+      <text id="rtm-summary-mass" x="1275" y="550" text-anchor="middle">Mass checks</text>
     </g>
     <g id="decision" data-role="module" data-width="300">
       <text x="1590" y="244" text-anchor="middle" font-size="31">4 Decision</text>
@@ -79,8 +79,7 @@
         <text x="1590" y="366" fill="#303840" stroke="none">COST</text>
         <text x="1452" y="314" fill="#303840" stroke="none">FLUX</text>
       </g>
-      <text x="1590" y="653" text-anchor="middle">CONC → color</text>
-      <text x="1590" y="689" text-anchor="middle" fill="#66717a">No candidate points</text>
+      <text id="decision-color-key" x="1590" y="550" text-anchor="middle">Color: CONC</text>
     </g>
     <g id="etl-to-csm" data-source="etl" data-target="csm" stroke="#56616a" stroke-width="2" fill="none">
       <path d="M260 207 L313 207"/>
@@ -95,19 +94,19 @@
       <polygon points="1171,207 1158,200 1158,214" fill="#56616a" stroke="none"/>
     </g>
     <g id="rtm-to-decision" data-source="rtm" data-target="decision" stroke="#56616a" stroke-width="2" fill="none">
-      <path d="M1305 523 L1579 523"/>
-      <polygon points="1587,523 1574,516 1574,530" fill="#56616a" stroke="none"/>
-      <text x="1445" y="559" text-anchor="middle" fill="#303840" stroke="none">Model response</text>
+      <path d="M1305 607 L1579 607"/>
+      <polygon points="1587,607 1574,600 1574,614" fill="#56616a" stroke="none"/>
+      <text id="model-response-label" x="1445" y="592" text-anchor="middle" fill="#303840" stroke="none">Outputs</text>
     </g>
     <g id="decision-to-rtm" data-source="decision" data-target="rtm" stroke="#56616a" stroke-width="2" fill="none">
-      <path d="M1579 582 L1305 582"/>
-      <polygon points="1297,582 1310,575 1310,589" fill="#56616a" stroke="none"/>
-      <text x="1445" y="618" text-anchor="middle" fill="#303840" stroke="none">Candidate request</text>
+      <path d="M1579 659 L1305 659"/>
+      <polygon points="1297,659 1310,652 1310,666" fill="#56616a" stroke="none"/>
+      <text id="candidate-request-label" x="1445" y="644" text-anchor="middle" fill="#303840" stroke="none">Plans</text>
     </g>
     <g id="decision-output" data-role="output" data-source="decision" data-target="output">
-      <path d="M1740 699 L1740 714 L1694 714" stroke="#56616a" stroke-width="2" fill="none"/>
-      <polygon points="1686,714 1699,707 1699,721" fill="#56616a"/>
-      <text x="1442" y="726" text-anchor="middle">Candidate schemes / gate status</text>
+      <path d="M1590 675 L1590 692" stroke="#56616a" stroke-width="2" fill="none"/>
+      <polygon points="1590,700 1583,687 1597,687" fill="#56616a"/>
+      <text id="candidate-schemes-label" x="1590" y="733" text-anchor="middle">Candidate schemes</text>
     </g>
     <g id="shared-resources" data-role="resources">
       <path d="M60 755 L1740 755" stroke="#ccd4d8" stroke-width="2"/>
