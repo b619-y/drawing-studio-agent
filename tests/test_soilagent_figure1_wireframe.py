@@ -21,23 +21,18 @@ class WireframeTests(unittest.TestCase):
         self.assertEqual(modules, ["etl", "csm", "twin", "rtm", "decision"])
 
     def test_headers_once(self):
-        for label in ["0 Auto-ETL", "1 Conceptualization", "2 Site reconstruction", "3 Reaction prediction", "4 Plan optimization"]:
+        for label in ["0 Auto-ETL", "1 CSM", "2 Digital twin", "3 RTM", "4 MOPSO"]:
             self.assertEqual(self.text.count(label), 1)
 
-    def test_process_titles_with_method_subtitles(self):
-        for module, method in [("csm", "CSM"), ("twin", "Digital twin"), ("rtm", "RTM"), ("decision", "MOPSO")]:
-            title = self.nodes[f"{module}-process-title"]
-            subtitle = self.nodes[f"{module}-method-label"]
+    def test_model_only_titles(self):
+        for module, label in [("csm", "1 CSM"), ("twin", "2 Digital twin"), ("rtm", "3 RTM"), ("decision", "4 MOPSO")]:
+            title = self.nodes[f"{module}-method-label"]
             self.assertIn(title, list(self.nodes[module]))
-            self.assertIn(subtitle, list(self.nodes[module]))
-            self.assertEqual(title.get("data-role"), "process-title")
-            self.assertEqual(subtitle.get("data-role"), "method-label")
-            self.assertEqual(subtitle.text, method)
-            self.assertNotIn(method, title.text)
-            self.assertEqual(title.get("x"), subtitle.get("x"))
-            self.assertLess(float(title.get("y")), float(subtitle.get("y")))
-            self.assertGreater(float(title.get("font-size")), float(self.nodes["canvas"].get("font-size")))
-        for old_title in ["1 CSM", "2 Digital twin", "3 RTM"]:
+            self.assertEqual(title.get("data-role"), "module-title")
+            self.assertEqual(title.text, label)
+            self.assertEqual(title.get("y"), "244")
+        self.assertFalse(any(n.get("data-role") in {"process-title", "method-label"} for n in self.root.iter()))
+        for old_title in ["Conceptualization", "Site reconstruction", "Reaction prediction", "Plan optimization"]:
             self.assertNotIn(old_title, self.text)
 
     def test_twin_largest(self):
@@ -62,12 +57,20 @@ class WireframeTests(unittest.TestCase):
         self.assertEqual(axes.get("data-state"), "empty-placeholder")
         self.assertFalse(any(n.tag in {NS + "circle", NS + "ellipse", NS + "image"} for n in axes.iter()))
         self.assertIn("Decision axes contain no candidate data", self.root.find(NS + "desc").text)
-        for word in ["TIME", "COST", "FLUX", "Color: CONC"]:
-            self.assertIn(word, self.text)
+        axis_text = " ".join("".join(n.itertext()) for n in axes.iter(NS + "text"))
+        for word in ["CONC", "COST", "FLUX"]:
+            self.assertIn(word, axis_text)
+        self.assertNotIn("TIME", axis_text)
+        conc = self.nodes["decision-axis-conc"]
+        self.assertEqual((conc.get("x"), conc.get("y")), ("1649", "508"))
+        self.assertIn("TIME remains a fourth optimization objective", self.root.find(NS + "desc").text)
 
-    def test_conceptual_and_draft_labels(self):
-        self.assertIn("Conceptual illustration / not to scale", self.text)
-        self.assertIn("STRUCTURE DRAFT", self.text)
+    def test_clean_figure_notes_in_metadata(self):
+        for removed in ["Color: CONC", "STRUCTURE DRAFT", "Dashed:", "Conceptual illustration / not to scale"]:
+            self.assertNotIn(removed, self.text)
+        desc = self.root.find(NS + "desc").text
+        for retained in ["Structure draft pending review", "conceptual illustration", "not to scale", "not a measured field", "methodological guidance"]:
+            self.assertIn(retained, desc)
 
     def test_csm_method_guidance(self):
         node = self.nodes["csm-to-twin"]
@@ -105,16 +108,14 @@ class WireframeTests(unittest.TestCase):
     def test_right_side_text_hierarchy(self):
         time = self.nodes["rtm-summary-time"]
         mass = self.nodes["rtm-summary-mass"]
-        color = self.nodes["decision-color-key"]
         output = self.nodes["model-response-label"]
         request = self.nodes["candidate-request-label"]
         scheme = self.nodes["candidate-schemes-label"]
         self.assertEqual(time.get("x"), mass.get("x"))
-        self.assertEqual(mass.get("y"), color.get("y"))
         self.assertLess(float(mass.get("y")), float(output.get("y")))
         self.assertLess(float(output.get("y")), float(request.get("y")))
         self.assertLess(float(request.get("y")), float(scheme.get("y")))
-        self.assertEqual(color.get("x"), scheme.get("x"))
+        self.assertEqual(self.nodes["decision-method-label"].get("x"), scheme.get("x"))
         self.assertEqual(output.text, "Outputs")
         self.assertEqual(request.text, "Plans")
 

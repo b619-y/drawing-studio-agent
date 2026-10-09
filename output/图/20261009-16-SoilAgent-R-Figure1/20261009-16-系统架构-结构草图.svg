@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="82mm" viewBox="0 0 1800 820">
-  <title>SoilAgent-R: evidence-grounded architecture, structure draft</title>
-  <desc>Five modules. The digital twin is a conceptual illustration, not a measured field. Dashed links denote methodological guidance or user revision. Decision axes contain no candidate data.</desc>
+  <title>SoilAgent-R: evidence-grounded architecture</title>
+  <desc>Five modules. Structure draft pending review. The digital twin is a conceptual illustration, not to scale and not a measured field. Dashed links denote methodological guidance or user revision. Decision axes contain no candidate data. Empty axes show CONC, COST and FLUX; TIME remains a fourth optimization objective, not shown in this placeholder.</desc>
   <g id="canvas" font-family="Arial" font-weight="700" font-size="26" fill="#303840" stroke-linejoin="round" stroke-linecap="round">
     <rect width="1800" height="820" fill="white"/>
     <g id="research-input" data-role="input">
@@ -25,8 +25,7 @@
       <text x="160" y="590" text-anchor="middle">Provenance</text>
     </g>
     <g id="csm" data-role="module" data-width="210">
-      <text id="csm-process-title" data-role="process-title" x="425" y="244" text-anchor="middle" font-size="28">1 Conceptualization</text>
-      <text id="csm-method-label" data-role="method-label" x="425" y="279" text-anchor="middle" fill="#66717a">CSM</text>
+      <text id="csm-method-label" data-role="module-title" x="425" y="244" text-anchor="middle" font-size="31">1 CSM</text>
       <g id="csm-profile" stroke="#66717a" stroke-width="2" fill="none">
         <path d="M323 378 L533 378 M323 438 L533 438 M323 483 L533 483"/>
         <path d="M337 377 L337 328 L366 328 L366 377 M333 329 L370 329"/>
@@ -39,8 +38,7 @@
       <text x="425" y="593" text-anchor="middle">Receptor</text>
     </g>
     <g id="twin" data-role="module" data-width="520">
-      <text id="twin-process-title" data-role="process-title" x="850" y="244" text-anchor="middle" font-size="31" fill="#45656a">2 Site reconstruction</text>
-      <text id="twin-method-label" data-role="method-label" x="850" y="279" text-anchor="middle" fill="#66717a">Digital twin</text>
+      <text id="twin-method-label" data-role="module-title" x="850" y="244" text-anchor="middle" font-size="34" fill="#45656a">2 Digital twin</text>
       <g id="conceptual-soil-block" stroke="#708388" stroke-width="2" fill="none">
         <path d="M636 387 L954 387 L1075 304 L756 304 Z" fill="#f3f6f6"/>
         <path d="M636 387 L954 387 L954 552 L636 552 Z" fill="#fafbfb"/>
@@ -52,11 +50,9 @@
         <path d="M715 404 C744 393 799 397 819 416 C848 426 866 415 885 435 C900 460 867 486 841 481 C804 464 778 481 748 465 C719 446 733 426 715 404 Z" fill="#e5eeec" stroke="#91aaa5"/>
       </g>
       <text x="850" y="600" text-anchor="middle">Geometry / initial fields / support</text>
-      <text x="850" y="638" text-anchor="middle" fill="#66717a">Conceptual illustration / not to scale</text>
     </g>
     <g id="rtm" data-role="module" data-width="210">
-      <text id="rtm-process-title" data-role="process-title" x="1275" y="244" text-anchor="middle" font-size="28">3 Reaction prediction</text>
-      <text id="rtm-method-label" data-role="method-label" x="1275" y="279" text-anchor="middle" fill="#66717a">RTM</text>
+      <text id="rtm-method-label" data-role="module-title" x="1275" y="244" text-anchor="middle" font-size="31">3 RTM</text>
       <g id="rtm-time-states" stroke="#66717a" stroke-width="2" fill="none">
         <rect x="1202" y="311" width="93" height="47"/>
         <path d="M1233 311 L1233 358 M1264 311 L1264 358 M1202 334 L1295 334"/>
@@ -71,18 +67,16 @@
       <text id="rtm-summary-mass" x="1275" y="550" text-anchor="middle">Mass checks</text>
     </g>
     <g id="decision" data-role="module" data-width="300">
-      <text id="decision-process-title" data-role="process-title" x="1590" y="244" text-anchor="middle" font-size="28">4 Plan optimization</text>
-      <text id="decision-method-label" data-role="method-label" x="1590" y="279" text-anchor="middle" fill="#66717a">MOPSO</text>
+      <text id="decision-method-label" data-role="module-title" x="1590" y="244" text-anchor="middle" font-size="31">4 MOPSO</text>
       <g id="decision-axes" data-state="empty-placeholder" stroke="#66717a" stroke-width="2" fill="none">
         <path d="M1508 432 L1680 471 M1508 432 L1580 370 M1508 432 L1508 329"/>
         <polygon points="1687,473 1675,463 1671,477" fill="#66717a" stroke="none"/>
         <polygon points="1586,365 1570,369 1580,380" fill="#66717a" stroke="none"/>
         <polygon points="1508,322 1501,335 1515,335" fill="#66717a" stroke="none"/>
-        <text x="1649" y="508" fill="#303840" stroke="none">TIME</text>
+        <text id="decision-axis-conc" x="1649" y="508" fill="#303840" stroke="none">CONC</text>
         <text x="1590" y="366" fill="#303840" stroke="none">COST</text>
         <text x="1452" y="314" fill="#303840" stroke="none">FLUX</text>
       </g>
-      <text id="decision-color-key" x="1590" y="550" text-anchor="middle">Color: CONC</text>
     </g>
     <g id="etl-to-csm" data-source="etl" data-target="csm" stroke="#56616a" stroke-width="2" fill="none">
       <path d="M260 207 L313 207"/>
@@ -115,7 +109,5 @@
       <path d="M60 755 L1740 755" stroke="#ccd4d8" stroke-width="2"/>
       <text x="60" y="790" fill="#66717a">Shared data / tools: site data · parameters · remediation literature · RTM / MOPSO</text>
     </g>
-    <text id="draft-label" x="60" y="685" fill="#66717a">STRUCTURE DRAFT</text>
-    <text id="guidance-key" x="60" y="722" fill="#66717a">Dashed: method guidance / user revision</text>
   </g>
 </svg>

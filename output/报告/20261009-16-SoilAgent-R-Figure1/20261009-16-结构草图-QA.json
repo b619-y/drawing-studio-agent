@@ -1,7 +1,7 @@
 {
-  "stage": "structure_draft_process_heading_revision",
+  "stage": "structure_draft_model_heading_and_axis_cleanup",
   "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
-  "source_sha256": "e76bf5f991218ccae2ecc81617dcc8a7505218b1a81ecc3023cfdf9da558b1b5",
+  "source_sha256": "1c7297fa6c6e176cf5ac106c2ba8e9a3500898717a2900eb0fe0431fdcbd4454",
   "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
   "typography": {
     "style": "yyc_typography_only",
@@ -28,9 +28,10 @@
     "pdf_dashed_guidance_and_feedback_preserved": true,
     "pdf_right_labels_present_once": true,
     "pdf_right_labels_no_text_collision": true,
-    "pdf_process_titles_and_method_subtitles_present_once": true,
-    "pdf_methods_below_process_titles": true,
-    "pdf_process_header_labels_no_text_collision": true,
+    "pdf_model_headers_present_once": true,
+    "pdf_model_headers_no_text_collision": true,
+    "pdf_removed_process_and_figure_notes_absent": true,
+    "pdf_conc_axis_replaces_time": true,
     "pdf_width_180mm": true,
     "pdf_height_82mm": true
   },
@@ -38,7 +39,7 @@
   "pdf_height_mm": 82.00000127156575,
   "pdf_minimum_font_pt": 6.236219882965088,
   "pdf_main_label_minimum_font_pt": 7.370079040527344,
-  "pdf_text_spans": 34,
+  "pdf_text_spans": 26,
   "pdf_vector_drawings": 45,
   "pdf_fonts": [
     "Arial-BoldMT"
@@ -63,12 +64,28 @@
         157.46133422851562
       ]
     ],
-    "Color: CONC": [
+    "CONC": [
       [
-        428.0,
-        149.236328125,
-        473.4144592285156,
-        157.46133422851562
+        467.43359375,
+        137.330078125,
+        489.1237487792969,
+        145.55508422851562
+      ]
+    ],
+    "COST": [
+      [
+        450.70703125,
+        97.076171875,
+        471.1590270996094,
+        105.30117797851562
+      ]
+    ],
+    "FLUX": [
+      [
+        411.58984375,
+        82.337890625,
+        430.81103515625,
+        90.56289672851562
       ]
     ],
     "Outputs": [
@@ -97,73 +114,49 @@
     ]
   },
   "right_label_collisions": [],
-  "process_header_boxes_pt": {
-    "1 Conceptualization": [
+  "model_header_boxes_pt": {
+    "0 Auto-ETL": [
       [
-        82.94140625,
-        61.98107147216797,
-        157.8429412841797,
-        70.8387680053711
-      ]
-    ],
-    "CSM": [
-      [
-        112.37109375,
-        72.416015625,
-        128.7400360107422,
-        80.64102172851562
-      ]
-    ],
-    "2 Site reconstruction": [
-      [
-        197.4296875,
+        21.875,
         61.211463928222656,
-        284.7677917480469,
+        68.69428253173828,
         71.01820373535156
       ]
     ],
-    "Digital twin": [
+    "1 CSM": [
       [
-        221.2734375,
-        72.416015625,
-        260.53387451171875,
-        80.64102172851562
+        107.0078125,
+        61.211463928222656,
+        133.85333251953125,
+        71.01820373535156
       ]
     ],
-    "3 Reaction prediction": [
+    "2 Digital twin": [
       [
-        321.18359375,
-        61.98107147216797,
-        401.8235778808594,
-        70.8387680053711
+        211.43359375,
+        60.441856384277344,
+        270.8120422363281,
+        71.19763946533203
       ]
     ],
-    "RTM": [
+    "3 RTM": [
       [
-        353.42578125,
-        72.416015625,
-        369.38201904296875,
-        80.64102172851562
+        348.3828125,
+        61.211463928222656,
+        374.73626708984375,
+        71.01820373535156
       ]
     ],
-    "4 Plan optimization": [
+    "4 MOPSO": [
       [
-        414.7421875,
-        61.98107147216797,
-        486.9927673339844,
-        70.8387680053711
-      ]
-    ],
-    "MOPSO": [
-      [
-        436.875,
-        72.416015625,
-        464.28436279296875,
-        80.64102172851562
+        430.78125,
+        61.211463928222656,
+        470.79034423828125,
+        71.01820373535156
       ]
     ]
   },
-  "process_header_collisions": [],
+  "model_header_collisions": [],
   "png_size_pixels": [
     2041,
     930
