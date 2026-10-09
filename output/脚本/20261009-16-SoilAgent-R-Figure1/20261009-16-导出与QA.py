@@ -106,7 +106,7 @@ def export(repo: Path) -> dict:
         visible_text = " ".join(s["text"] for s in spans)
         removed_labels = ["Conceptualization", "Site reconstruction", "Reaction prediction", "Plan optimization", "Color: CONC", "STRUCTURE DRAFT", "Dashed:", "Conceptual illustration / not to scale", "Geometry / initial fields / support", "Time evolution", "Mass checks"]
         allowed_subscripts = sorted(n.text.strip() for n in root.iter(NS + "tspan") if n.get("dy") == "8")
-        formula_bands = {"balance": (490, 565), "partition": (565, 615)}
+        formula_bands = {"balance": (522, 615)}
         formula_rects = {}
         for name, (top, bottom) in formula_bands.items():
             band = svg_band(1175, top, 1365, bottom)
@@ -117,9 +117,12 @@ def export(repo: Path) -> dict:
                     box |= pymupdf.Rect(member["bbox"])
                 formula_rects[name] = box
         formula_collisions = [[name, label] for name, box in formula_rects.items() for label, boxes in right_rects.items() if any((box & other).get_area() > 0.5 for other in boxes)]
-        equals_rects = page.search_for("=", clip=svg_band(1238, 505, 1265, 615))
-        equals_aligned = len(equals_rects) == 2 and abs(equals_rects[0].x0 - equals_rects[1].x0) < 0.1
-        formula_rows_overlap = len(formula_rects) == 2 and (formula_rects["balance"] & formula_rects["partition"]).get_area() > 0.5
+        equals_rects = page.search_for("=")
+        balance_centered = "balance" in formula_rects and abs(
+            (formula_rects["balance"].x0 + formula_rects["balance"].x1) / 2
+            - rect.width * float(nodes["rtm-method-label"].get("x")) / view_width
+        ) < 0.5
+        partition_absent = not any(ident.startswith("rtm-partition") for ident in ids)
         annotation_groups = [nodes[name] for name in ["etl-annotations", "csm-annotations", "twin-parameter-fields", "rtm-equations", "decision-output"]]
         final_baselines = [group.get("data-final-baseline") for group in annotation_groups]
         header_baselines = [node.get("y") for node in root.iter() if node.get("data-role") == "module-title"]
@@ -141,10 +144,11 @@ def export(repo: Path) -> dict:
             "pdf_removed_process_and_figure_notes_absent": all(label not in visible_text for label in removed_labels),
             "svg_shared_footer_and_divider_absent": "shared-resources" not in ids and not any(n.get("d") == "M60 755 L1740 755" for n in root.iter(NS + "path")),
             "pdf_shared_footer_absent": "Shared data / tools" not in visible_text,
-            "pdf_rtm_formulas_present": set(formula_rects) == set(formula_bands) and bool(page.search_for("dM")) and bool(page.search_for("dt")) and bool(page.search_for("∑F")),
-            "pdf_rtm_formulas_no_label_collision": not formula_collisions,
-            "pdf_rtm_equal_signs_aligned": equals_aligned,
-            "pdf_rtm_formula_rows_nonoverlapping": not formula_rows_overlap,
+            "pdf_rtm_balance_present": set(formula_rects) == set(formula_bands) and bool(page.search_for("dM")) and bool(page.search_for("dt")) and bool(page.search_for("∑F")),
+            "pdf_rtm_balance_no_label_collision": not formula_collisions,
+            "pdf_rtm_only_one_equation_equals_sign": len(equals_rects) == 1,
+            "pdf_rtm_balance_centered_under_header": balance_centered,
+            "svg_partition_equation_removed": partition_absent,
             "svg_five_title_baselines_aligned": len(header_baselines) == 5 and set(header_baselines) == {"200"},
             "svg_five_annotation_final_baselines_aligned": final_baselines == ["590"] * 5,
             "svg_compact_bottom_margin": view_height - float(final_baselines[0]) == 40,
@@ -153,7 +157,7 @@ def export(repo: Path) -> dict:
             "pdf_height_63mm": abs(rect.height * 25.4 / 72 - 63) < 0.01,
         }
         receipt = {
-            "stage": "structure_draft_compact_aligned_layout",
+            "stage": "structure_draft_single_rtm_balance",
             "source": source.relative_to(repo).as_posix(),
             "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
             "backend": f"CairoSVG {cairosvg.__version__}; PyMuPDF {pymupdf.VersionBind} for PDF QA/render",
@@ -176,7 +180,7 @@ def export(repo: Path) -> dict:
             "formula_boxes_pt": {name: list(box) for name, box in formula_rects.items()},
             "formula_label_collisions": formula_collisions,
             "rtm_equal_sign_boxes_pt": [list(box) for box in equals_rects],
-            "formula_rows_overlap": formula_rows_overlap,
+            "partition_equation_displayed": not partition_absent,
             "module_title_baselines_svg": header_baselines,
             "module_annotation_final_baselines_svg": final_baselines,
             "png_size_pixels": [pixmap.width, pixmap.height],

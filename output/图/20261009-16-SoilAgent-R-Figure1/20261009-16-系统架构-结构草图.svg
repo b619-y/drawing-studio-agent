@@ -70,17 +70,12 @@
       <text id="rtm-time-0" x="1320" y="324" data-time-index="0">t<tspan font-size="22" dy="8">0</tspan></text>
       <text id="rtm-time-1" x="1320" y="450" data-time-index="1">t<tspan font-size="22" dy="8">1</tspan></text>
       <g id="rtm-equations" data-role="module-annotations" data-final-baseline="590">
-        <g id="rtm-balance-equation" data-law="cell-mass-balance" data-equation="dM/dt = −∑F − r" data-equals-x="1242" data-baseline="540">
-          <text id="rtm-balance-numerator" x="1208" y="520" text-anchor="middle">dM</text>
-          <path id="rtm-fraction-rule" d="M1184 529 L1232 529" stroke="#303840" stroke-width="1.5" fill="none"/>
-          <text id="rtm-balance-denominator" x="1208" y="556" text-anchor="middle">dt</text>
-          <text id="rtm-balance-equals" x="1242" y="540">=</text>
-          <text id="rtm-balance-rhs" x="1270" y="540">−∑F − r</text>
-        </g>
-        <g id="rtm-partition-equation" data-law="linear-equilibrium-partition" data-equation="Cs = Kd Cw" data-equals-x="1242" data-baseline="590">
-          <text id="rtm-partition-lhs" x="1207" y="590">C<tspan font-size="22" dy="8">s</tspan></text>
-          <text id="rtm-partition-equals" x="1242" y="590">=</text>
-          <text id="rtm-partition-rhs" x="1270" y="590">K<tspan font-size="22" dy="8">d</tspan><tspan dy="-8"> C</tspan><tspan font-size="22" dy="8">w</tspan></text>
+        <g id="rtm-balance-equation" data-law="cell-mass-balance" data-equation="dM/dt = −∑F − r" data-center-x="1275" data-equals-x="1242" data-baseline="574">
+          <text id="rtm-balance-numerator" x="1208" y="554" text-anchor="middle">dM</text>
+          <path id="rtm-fraction-rule" d="M1184 563 L1232 563" stroke="#303840" stroke-width="1.5" fill="none"/>
+          <text id="rtm-balance-denominator" x="1208" y="590" text-anchor="middle">dt</text>
+          <text id="rtm-balance-equals" x="1242" y="574">=</text>
+          <text id="rtm-balance-rhs" x="1270" y="574">−∑F − r</text>
         </g>
       </g>
     </g>

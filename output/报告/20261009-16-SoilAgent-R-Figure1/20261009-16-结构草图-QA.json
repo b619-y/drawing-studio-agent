@@ -1,7 +1,7 @@
 {
-  "stage": "structure_draft_compact_aligned_layout",
+  "stage": "structure_draft_single_rtm_balance",
   "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
-  "source_sha256": "7a9f188ee0575d884811fcebc63dfd301c28d9b69e7f85c155d50066f41604f6",
+  "source_sha256": "b44b371a27fd898eb713f0916d4ea42843a341854b0d50fd4dbe5f93d8e9a782",
   "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
   "typography": {
     "style": "yyc_typography_only",
@@ -33,10 +33,11 @@
     "pdf_removed_process_and_figure_notes_absent": true,
     "svg_shared_footer_and_divider_absent": true,
     "pdf_shared_footer_absent": true,
-    "pdf_rtm_formulas_present": true,
-    "pdf_rtm_formulas_no_label_collision": true,
-    "pdf_rtm_equal_signs_aligned": true,
-    "pdf_rtm_formula_rows_nonoverlapping": true,
+    "pdf_rtm_balance_present": true,
+    "pdf_rtm_balance_no_label_collision": true,
+    "pdf_rtm_only_one_equation_equals_sign": true,
+    "pdf_rtm_balance_centered_under_header": true,
+    "svg_partition_equation_removed": true,
     "svg_five_title_baselines_aligned": true,
     "svg_five_annotation_final_baselines_aligned": true,
     "svg_compact_bottom_margin": true,
@@ -48,7 +49,7 @@
   "pdf_height_mm": 62.999998219807935,
   "pdf_minimum_font_pt": 6.236219882965088,
   "pdf_main_label_minimum_font_pt": 7.370079040527344,
-  "pdf_text_spans": 40,
+  "pdf_text_spans": 32,
   "pdf_vector_drawings": 45,
   "pdf_fonts": [
     "Arial-BoldMT"
@@ -153,33 +154,21 @@
   "formula_boxes_pt": {
     "balance": [
       337.21484375,
-      140.732421875,
+      150.369140625,
       385.2942199707031,
-      159.16055297851562
-    ],
-    "partition": [
-      342.140625,
-      160.572265625,
-      381.3455505371094,
-      171.06680297851562
+      168.79727172851562
     ]
   },
   "formula_label_collisions": [],
   "rtm_equal_sign_boxes_pt": [
     [
       352.0625,
-      146.400390625,
+      156.037109375,
       356.3592529296875,
-      154.62539672851562
-    ],
-    [
-      352.0625,
-      160.572265625,
-      356.3592529296875,
-      168.79727172851562
+      164.26211547851562
     ]
   ],
-  "formula_rows_overlap": false,
+  "partition_equation_displayed": false,
   "module_title_baselines_svg": [
     "200",
     "200",

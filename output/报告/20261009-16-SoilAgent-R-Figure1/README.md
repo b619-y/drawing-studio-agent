@@ -1,6 +1,6 @@
 # SoilAgent-R Figure 1：第一阶段结构审阅
 
-任务：[Issue #2](https://github.com/b619-y/drawing-studio-agent/issues/2)。2026-10-09用户认可总体结构，并要求改为yyc字体、安装真正Arial及精简文字。Twin下方已改为8个参数场符号、RTM下方已改为守恒与相平衡公式；沿用模型标题与CONC轴。最新修订按用户反馈收紧左下留白、统一标题及说明基线，将RTM公式按等号对齐。仍为待审结构草图，不是正式投稿图，也不关闭Issue。本轮不自动展开真实数据制图。
+任务：[Issue #2](https://github.com/b619-y/drawing-studio-agent/issues/2)。2026-10-09用户认可总体结构，并要求改为yyc字体、安装真正Arial及精简文字。Twin下方已改为8个参数场符号、RTM下方只保留控制体库存守恒式；沿用模型标题与CONC轴。最新修订按用户要求删除图面的Cs=Kd Cw，将单个质量平衡式居中并对齐下方说明。模型中的相平衡关系不变。仍为待审结构草图，不是正式投稿图，也不关闭Issue。本轮不自动展开真实数据制图。
 
 ## 本轮设计
 
@@ -25,11 +25,11 @@ Twin没有真实尺度、井位或浓度色标，概念/非等比例说明移至
 
 前轮按`scansci-svg`局部编辑规范整理右侧；最新一轮统一全图版式，仍保留Arial Bold、配色、模型符号、空坐标语义及箭头方向：
 
-- RTM的原`Time evolution`、`Mass checks`按最新要求替换为守恒和相平衡公式；Decision保留空坐标，`Color: CONC`已删除。
+- RTM的原`Time evolution`、`Mass checks`已替换为公式；按最新要求图面只保留质量平衡式，相平衡关系留在模型及方法说明。Decision保留空坐标，`Color: CONC`已删除。
 - 两条交互箭头由下方带移到RTM与MOPSO的栏间空隙：`Outputs`表示RTM模型响应，`Plans`表示MOPSO候选请求，方向不变。
 - `Candidate schemes`归入Decision下方；门控状态说明放在caption/依据表，不挤在图面。
 - 空坐标状态未改变，无候选点声明保留于SVG描述、caption及文档；没有因删减画面文字而增加虚构数据。
-- 最终PDF六个右侧独立标签（含三轴标签）各出现一次；两行公式另作包围盒检查，与标签无碰撞。仍需目视判断箭头、轴及图形间的整体关系。
+- 最终PDF六个右侧独立标签（含三轴标签）各出现一次；单个质量平衡式另作包围盒检查，与标签无碰撞。仍需目视判断箭头、轴及图形间的整体关系。
 
 ## 模型标题与轴标签精简（当前版）
 
@@ -45,23 +45,25 @@ Twin没有真实尺度、井位或浓度色标，概念/非等比例说明移至
 
 Twin下方列`K、K_d、α、λ、λ_active、R、v、D`，来自`2-数字孪生/skill/scripts/build_twin.py:143–146,351–425,707–714`登记的七个常规参数场加一个扩展场。只列名称，不抄历史清单里的数值。它们不是八个独立实测标量：`R/v/D`属于派生场，`v/D`可标为deferred；`λ_active`是情景增强场，不等同于所有路线的恒定反应速率，也不宣称已批准替换正式RTM输入。
 
-RTM下方用当前direct RTM的局部守恒与线性相平衡关系：
+RTM图面下方只显示当前direct RTM的局部守恒关系：
 
 \[
-\frac{dM}{dt}=-\sum_f F_f-r,\qquad C_s=K_d C_w.
+\frac{dM}{dt}=-\sum_f F_f-r.
 \]
 
-`M`为控制体总Cr(VI)库存（mg），`F_f`为有符号向外面质量率（mg/d，含对流与弥散），`r`为净反应质量率（mg/d）；`C_s`只指吸附相（mg/kg），不是土壤总浓度，`C_w`为水相（mg/L），`K_d`用L/kg。依据为`3-rtm模拟/skill/scripts/rtm_mopso/mass_conservative_solver.py:215–226,547–634,815–875`。该图展示半离散守恒关系，不替代实际算子分裂、正性处理及独立质量账本；`r`由实际路线、有限容量和作用窗口决定，未将工程反应压成持续恒定`λ_active`。
+`M`为控制体总Cr(VI)库存（mg），`F_f`为有符号向外面质量率（mg/d，含对流与弥散），`r`为净反应质量率（mg/d）。依据为`3-rtm模拟/skill/scripts/rtm_mopso/mass_conservative_solver.py:215–226,547–634,815–875`。该图展示半离散守恒关系，不替代实际算子分裂、正性处理及独立质量账本；`r`由实际路线、有限容量和作用窗口决定，未将工程反应压成持续恒定`λ_active`。
 
-公式保留原生可编辑文字，参数与相平衡下标采用`tspan`；按真正Arial Bold字宽确定起点，不对每个下标片段单独居中。无科学代码或数据改写。
+方法说明仍保留模型中的线性相平衡关系`C_s=K_d C_w`：`C_s`只指吸附相（mg/kg），不是土壤总浓度，`C_w`为水相（mg/L），`K_d`用L/kg。该关系仅从图面删除，不修改科学模型中的相分配。
+
+质量平衡式保留原生可编辑文字与竖分数，参数和时间下标采用`tspan`；按真正Arial Bold字宽确定起点，不对每个下标片段单独居中。无科学代码或数据改写。
 
 ## 留白、对齐与公式排版（最新修订）
 
-按`scansci-svg`重排同一SVG：画幅由180×82 mm收紧为180×63 mm，字体物理尺寸不缩小。五个模块标题共用`y=200`基线；ETL、CSM与Twin下方说明统一为`y=550/590`两行，RTM第二式及候选输出也共用`y=590`末行基线。CSM仅将Source与Pathway合到一行，三个概念均保留。
+按`scansci-svg`重排同一SVG：画幅由180×82 mm收紧为180×63 mm，字体物理尺寸不缩小。五个模块标题共用`y=200`基线；ETL、CSM与Twin下方说明统一为`y=550/590`两行，RTM公式区下沿及候选输出对齐其他说明末行。CSM仅将Source与Pathway合到一行，三个概念均保留。
 
-RTM导数改为原生文字和分数横线，不栅格化或描成字形轮廓；两式等号统一在`x=1242`，右端统一在`x=1270`。最终PDF检查两行完整文字包围盒不重叠，等号位置一致。Outputs/Plans移至栏间，Candidate schemes直接归在MOPSO下方，避免右侧尾部拉高全图。关联箭头按原来源、目标及方向重接。
+RTM导数保留原生文字和分数横线，不栅格化或描成字形轮廓；最新图面仅保留一个质量平衡式，整体在RTM栏`x=1275`居中，公式区下沿与其他说明对齐。最终PDF检查公式与标签包围盒无碰撞及整体居中。Outputs/Plans位于栏间，Candidate schemes直接归在MOPSO下方，避免右侧尾部拉高全图。关联箭头的来源、目标及方向不变。
 
-仅调整示意对象的尺寸、位置与文字分行；没有新增参数、修改公式含义或改变科学状态。最终PDF重渲染PNG已由绘制者及独立只读审阅者核对，无必须修正的遮挡或对齐问题；未做目标编辑器交互验证。
+本轮只删除图面的相平衡关系并居中保留守恒式，其余布局不变；没有新增参数、修改科学公式含义或改变科学状态。本轮最终PDF重渲染PNG仅由绘制者目视核对，无明显遮挡或对齐问题；未再次进行独立版式审阅，也未做目标编辑器交互验证。
 
 ## 成果与来源
 
@@ -77,9 +79,9 @@ RTM导数改为原生文字和分数横线，不栅格化或描成字形轮廓�
 
 自动检查包括SVG唯一ID、五模块唯一、禁止位图/随机点/额外Agent、箭头拓扑、原生文字、PDF物理尺寸/无图像对象、字体及虚线保留、重新渲染及源码SHA。实际回执见[QA JSON](20261009-16-结构草图-QA.json)。
 
-- 21项回归测试通过，包含模型标题、画面注记/资源条删除、CONC轴位置、元数据状态保留、八参数、可编辑分数及对齐基线；scansci结构检查通过。最终PDF五个模型标题及六个右侧标签各出现一次、文字包围盒无碰撞，两行公式及其标签无碰撞、等号对齐，已删文字未残留。关系XML未改，上一轮drawio严格检查0错误、0警告仍适用于原文件，本轮不重复桌面导出。
+- 21项回归测试通过，包含模型标题、画面注记/资源条删除、CONC轴位置、元数据状态保留、八参数、单个质量平衡式、可编辑分数及对齐基线；scansci结构检查通过。最终PDF五个模型标题及六个右侧标签各出现一次、文字包围盒无碰撞，质量平衡式整体居中且与标签无碰撞，已删文字和相平衡公式未在图面残留。关系XML未改，上一轮drawio严格检查0错误、0警告仍适用于原文件，本轮不重复桌面导出。
 - PDF为180×63 mm，原生矢量、无图像对象；仅使用`Arial-BoldMT`。主体文字最小7.37 pt，原生下标6.24 pt；字体子集嵌入，两条虚线确实保留，所有可见字符都有Arial字形。
-- 最终PNG由最终PDF重渲染；绘制者已目视核对字体、虚线、箭头、留白及无明显遮挡/裁切。独立只读复核未发现新的实质科学语义问题。
+- 最终PNG由最终PDF重渲染；本轮绘制者已目视核对字体、虚线、箭头、留白及无明显遮挡/裁切。本轮未再次进行独立版式目视审阅。
 - 未执行：draw.io桌面导出/交互编辑、特定期刊投稿规格检查、实体打印审阅；正式科学验收仍待进行。自动检查不能代替这些环节。
 
 ### 复现
@@ -105,4 +107,4 @@ scansci与drawio检查器由执行环境提供，不拷贝第三方脚本进此P
 
 **Figure 1. Evidence-grounded architecture of SoilAgent-R (structure draft pending review).** Site information is organized through Auto-ETL, a conceptual site model (CSM), three-dimensional digital-twin construction, reactive transport modelling (RTM), and multi-objective decision support (MOPSO). The CSM-to-twin connection represents methodological guidance rather than a claimed automated file interface. The Outputs and Plans links denote RTM model responses and MOPSO candidate requests, respectively. The four objectives are concentration (CONC), cumulative transport (FLUX), cost (COST), and engineering duration (TIME). The empty CONC/COST/FLUX axes are a layout placeholder without candidate points; TIME remains a fourth optimization objective but is not displayed in this placeholder. No objective-to-color mapping is shown. Candidate schemes remain screening-level and subject to formal evaluation gates, not validated engineering optima. The conceptual block is not to scale and does not encode measured concentrations. Dashed feedback denotes user revision of goals, not an autonomous real-time control loop. New reconstruction candidates are currently No-Go for replacing the retained RTM input.
 
-The eight symbols below the twin identify documented parameter-field groups, including derived and scenario-dependent fields, not eight independently measured quantities. The RTM equations denote control-volume mass balance and equilibrium partitioning: M is total cell Cr(VI) mass, F is signed outward face mass rate, r is net reaction mass rate, and C_s and C_w are sorbed and aqueous concentrations. Engineering reaction rates retain their applicable capacity and time-window constraints.
+The eight symbols below the twin identify documented parameter-field groups, including derived and scenario-dependent fields, not eight independently measured quantities. The single displayed RTM equation denotes control-volume mass balance: M is total cell Cr(VI) mass, F is signed outward face mass rate, and r is net reaction mass rate. Equilibrium partitioning remains part of the underlying model. Engineering reaction rates retain their applicable capacity and time-window constraints.

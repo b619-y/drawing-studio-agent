@@ -113,12 +113,10 @@ class WireframeTests(unittest.TestCase):
 
     def test_right_side_text_hierarchy(self):
         balance = self.nodes["rtm-balance-equation"]
-        partition = self.nodes["rtm-partition-equation"]
         output = self.nodes["model-response-label"]
         request = self.nodes["candidate-request-label"]
         scheme = self.nodes["candidate-schemes-label"]
-        self.assertEqual(balance.get("data-equals-x"), partition.get("data-equals-x"))
-        self.assertLess(float(balance.get("data-baseline")), float(partition.get("data-baseline")))
+        self.assertEqual(balance.get("data-center-x"), self.nodes["rtm-method-label"].get("x"))
         self.assertLess(float(output.get("y")), float(request.get("y")))
         self.assertLess(float(request.get("y")), float(scheme.get("y")))
         self.assertLess(float(request.get("y")), float(balance.get("data-baseline")))
@@ -126,13 +124,13 @@ class WireframeTests(unittest.TestCase):
         self.assertEqual(output.text, "Outputs")
         self.assertEqual(request.text, "Plans")
 
-    def test_eight_twin_fields_and_rtm_equations(self):
+    def test_eight_twin_fields_and_single_rtm_equation(self):
         fields = self.nodes["twin-parameter-fields"].get("data-fields").split(",")
         self.assertEqual(fields, ["K", "Kd", "alpha", "lambda", "lambda_active", "R", "v", "D"])
         self.assertEqual(len(set(fields)), 8)
         self.assertEqual(self.nodes["rtm-balance-equation"].get("data-equation"), "dM/dt = −∑F − r")
-        self.assertEqual(self.nodes["rtm-partition-equation"].get("data-equation"), "Cs = Kd Cw")
-        self.assertEqual(["".join(n.itertext()) for n in self.nodes["rtm-partition-equation"].iter(NS + "text")], ["Cs", "=", "Kd Cw"])
+        self.assertFalse(any(ident.startswith("rtm-partition") for ident in self.nodes))
+        self.assertEqual([n.get("data-law") for n in self.root.iter() if n.get("data-law")], ["cell-mass-balance"])
         for removed in ["Geometry / initial fields / support", "Time evolution", "Mass checks"]:
             self.assertNotIn(removed, self.text)
 
@@ -142,17 +140,18 @@ class WireframeTests(unittest.TestCase):
         for ident in ["etl-annotations", "csm-annotations", "twin-parameter-fields", "rtm-equations", "decision-output"]:
             group = self.nodes[ident]
             self.assertEqual(group.get("data-final-baseline"), "590")
-            self.assertEqual(list(group.iter(NS + "text"))[-1].get("y"), "590")
+            self.assertEqual(max(float(n.get("y")) for n in group.iter(NS + "text")), 590)
         for ident in ["etl-annotations", "csm-annotations", "twin-parameter-fields"]:
             self.assertEqual([n.get("y") for n in self.nodes[ident].iter(NS + "text")], ["550", "590"])
 
-    def test_rtm_native_fraction_and_aligned_equals(self):
+    def test_rtm_native_fraction_and_single_centered_balance(self):
         self.assertEqual(self.nodes["rtm-balance-numerator"].text, "dM")
         self.assertEqual(self.nodes["rtm-balance-denominator"].text, "dt")
         self.assertEqual(self.nodes["rtm-balance-numerator"].get("x"), self.nodes["rtm-balance-denominator"].get("x"))
         self.assertEqual(self.nodes["rtm-fraction-rule"].tag, NS + "path")
-        self.assertEqual(self.nodes["rtm-balance-equals"].get("x"), self.nodes["rtm-partition-equals"].get("x"))
-        self.assertEqual(self.nodes["rtm-balance-rhs"].get("x"), self.nodes["rtm-partition-rhs"].get("x"))
+        self.assertEqual(self.nodes["rtm-balance-equals"].get("y"), self.nodes["rtm-balance-rhs"].get("y"))
+        self.assertEqual(self.nodes["rtm-balance-denominator"].get("y"), "590")
+        self.assertEqual(self.nodes["rtm-balance-equation"].get("data-center-x"), "1275")
 
     def test_no_external_refs(self):
         for node in self.root.iter():
