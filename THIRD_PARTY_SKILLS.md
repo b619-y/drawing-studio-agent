@@ -19,10 +19,6 @@
 
 Paper Plot Skills 和 `nature-figure/assets/figures4papers/` 仅保留在当前机器。前者未提供许可证，后者的上游附带说明未授权再分发；公开仓库只保留必要的来源链接和不含这些素材的技能流程。
 
-## 工作区路由
+## 路由与质量检查
 
-- 数据准备、统计分析与科研数据图仍由 EasyPlot 主责。Paper Plot 仅在本机已有安装时用于模板复现、特定风格或图型建议。
-- 先找视觉方向时才调用 AgentFigureGallery；选定参考后再用对应的绘图流程实现。
-- Nature Figure 用于投稿多面板架构和相应导出审查；K-Dense 用于补充数据真实性、缺失/不确定性、可访问性和元数据检查。两套检查不默认同时全量运行。
-- Figures for Papers 提供代码与风格参考；复现定量图必须使用原始数据，不能从论文截图估算或伪造数值。
-- Python 绘图和审查脚本优先运行本项目 `.venv/bin/python`。该环境基于本机 Python，并安装了 Nature Figure PDF 审查所需的 PyMuPDF；R 环境仍按 `README.md` 中的说明处理。
+Skill 触发条件、职责边界、交接内容、QA 阶段和变更后的回归范围统一见 [`SKILL_ROUTING.md`](SKILL_ROUTING.md)。本项目默认用 Python；绘图和审查脚本优先运行 `.venv/bin/python`。该环境包含 Nature Figure PDF 检查所需的 PyMuPDF；R 环境见 `README.md`。

@@ -10,6 +10,7 @@
 - `output/表/`：分析结果表与绘图所用数据，按主题建立子目录。
 - `output/报告/`：图注、方法说明、来源记录与导出检查，按主题建立子目录。
 - `.codex/agents/drawing_studio.toml`：此工作区的自定义绘图 agent 配置。
+- `SKILL_ROUTING.md`：Skill 调度顺序、职责边界、交接信息与分阶段 QA 规范。
 - `.agents/skills/`：Tavotto 和外部科研绘图 skill 的项目级副本；许可证与分发范围见 `THIRD_PARTY_SKILLS.md`。
 - `third_party/`：对应的上游仓库浅克隆/稀疏克隆；AgentFigureGallery 的源码、虚拟环境及轻量内置图库也在此。
 - `.venv/`：本项目 Python 绘图/审查环境，基于本机 scientific Python 安装，并包含 Nature Figure PDF 审查所需的 PyMuPDF。
@@ -17,7 +18,7 @@
 
 ## 使用
 
-在本目录启动 Codex，或把绘图任务明确指定到此目录。直接描述目标和输入文件即可；需要专门的子 agent 时可指定 `drawing_studio`。本工作区默认使用 Python 作图；明确要求 R 时使用 R。当前本机没有 `Rscript`，R 任务需要先准备 R 环境。
+在本目录启动 Codex，或把绘图任务明确指定到此目录。直接描述目标和输入文件即可；需要专门的子 agent 时可指定 `drawing_studio`。Agent 按 `SKILL_ROUTING.md` 选一个制作主责 Skill，之后只增加有明确触发条件的辅助或 QA Skill。本工作区默认使用 Python 作图；明确要求 R 时使用 R。当前本机没有 `Rscript`，R 任务需要先准备 R 环境。
 
 在本机运行绘图和审查脚本时使用 `.venv/bin/python`。AgentFigureGallery 使用独立环境和内置轻量图库，调用方式见 `AGENTS.md` 与 `THIRD_PARTY_SKILLS.md`。
 
