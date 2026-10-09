@@ -1,7 +1,7 @@
 {
-  "stage": "structure_draft_right_side_layout_revision",
+  "stage": "structure_draft_process_heading_revision",
   "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
-  "source_sha256": "8e02bb24a963f490e8922faa9871160e00f8457900626eb6feede68d9685ea3b",
+  "source_sha256": "e76bf5f991218ccae2ecc81617dcc8a7505218b1a81ecc3023cfdf9da558b1b5",
   "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
   "typography": {
     "style": "yyc_typography_only",
@@ -28,6 +28,9 @@
     "pdf_dashed_guidance_and_feedback_preserved": true,
     "pdf_right_labels_present_once": true,
     "pdf_right_labels_no_text_collision": true,
+    "pdf_process_titles_and_method_subtitles_present_once": true,
+    "pdf_methods_below_process_titles": true,
+    "pdf_process_header_labels_no_text_collision": true,
     "pdf_width_180mm": true,
     "pdf_height_82mm": true
   },
@@ -35,7 +38,7 @@
   "pdf_height_mm": 82.00000127156575,
   "pdf_minimum_font_pt": 6.236219882965088,
   "pdf_main_label_minimum_font_pt": 7.370079040527344,
-  "pdf_text_spans": 31,
+  "pdf_text_spans": 34,
   "pdf_vector_drawings": 45,
   "pdf_fonts": [
     "Arial-BoldMT"
@@ -94,6 +97,73 @@
     ]
   },
   "right_label_collisions": [],
+  "process_header_boxes_pt": {
+    "1 Conceptualization": [
+      [
+        82.94140625,
+        61.98107147216797,
+        157.8429412841797,
+        70.8387680053711
+      ]
+    ],
+    "CSM": [
+      [
+        112.37109375,
+        72.416015625,
+        128.7400360107422,
+        80.64102172851562
+      ]
+    ],
+    "2 Site reconstruction": [
+      [
+        197.4296875,
+        61.211463928222656,
+        284.7677917480469,
+        71.01820373535156
+      ]
+    ],
+    "Digital twin": [
+      [
+        221.2734375,
+        72.416015625,
+        260.53387451171875,
+        80.64102172851562
+      ]
+    ],
+    "3 Reaction prediction": [
+      [
+        321.18359375,
+        61.98107147216797,
+        401.8235778808594,
+        70.8387680053711
+      ]
+    ],
+    "RTM": [
+      [
+        353.42578125,
+        72.416015625,
+        369.38201904296875,
+        80.64102172851562
+      ]
+    ],
+    "4 Plan optimization": [
+      [
+        414.7421875,
+        61.98107147216797,
+        486.9927673339844,
+        70.8387680053711
+      ]
+    ],
+    "MOPSO": [
+      [
+        436.875,
+        72.416015625,
+        464.28436279296875,
+        80.64102172851562
+      ]
+    ]
+  },
+  "process_header_collisions": [],
   "png_size_pixels": [
     2041,
     930

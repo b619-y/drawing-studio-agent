@@ -25,7 +25,8 @@
       <text x="160" y="590" text-anchor="middle">Provenance</text>
     </g>
     <g id="csm" data-role="module" data-width="210">
-      <text x="425" y="244" text-anchor="middle" font-size="31">1 CSM</text>
+      <text id="csm-process-title" data-role="process-title" x="425" y="244" text-anchor="middle" font-size="28">1 Conceptualization</text>
+      <text id="csm-method-label" data-role="method-label" x="425" y="279" text-anchor="middle" fill="#66717a">CSM</text>
       <g id="csm-profile" stroke="#66717a" stroke-width="2" fill="none">
         <path d="M323 378 L533 378 M323 438 L533 438 M323 483 L533 483"/>
         <path d="M337 377 L337 328 L366 328 L366 377 M333 329 L370 329"/>
@@ -38,7 +39,8 @@
       <text x="425" y="593" text-anchor="middle">Receptor</text>
     </g>
     <g id="twin" data-role="module" data-width="520">
-      <text x="850" y="244" text-anchor="middle" font-size="34" fill="#45656a">2 Digital twin</text>
+      <text id="twin-process-title" data-role="process-title" x="850" y="244" text-anchor="middle" font-size="31" fill="#45656a">2 Site reconstruction</text>
+      <text id="twin-method-label" data-role="method-label" x="850" y="279" text-anchor="middle" fill="#66717a">Digital twin</text>
       <g id="conceptual-soil-block" stroke="#708388" stroke-width="2" fill="none">
         <path d="M636 387 L954 387 L1075 304 L756 304 Z" fill="#f3f6f6"/>
         <path d="M636 387 L954 387 L954 552 L636 552 Z" fill="#fafbfb"/>
@@ -53,7 +55,8 @@
       <text x="850" y="638" text-anchor="middle" fill="#66717a">Conceptual illustration / not to scale</text>
     </g>
     <g id="rtm" data-role="module" data-width="210">
-      <text x="1275" y="244" text-anchor="middle" font-size="31">3 RTM</text>
+      <text id="rtm-process-title" data-role="process-title" x="1275" y="244" text-anchor="middle" font-size="28">3 Reaction prediction</text>
+      <text id="rtm-method-label" data-role="method-label" x="1275" y="279" text-anchor="middle" fill="#66717a">RTM</text>
       <g id="rtm-time-states" stroke="#66717a" stroke-width="2" fill="none">
         <rect x="1202" y="311" width="93" height="47"/>
         <path d="M1233 311 L1233 358 M1264 311 L1264 358 M1202 334 L1295 334"/>
@@ -68,8 +71,8 @@
       <text id="rtm-summary-mass" x="1275" y="550" text-anchor="middle">Mass checks</text>
     </g>
     <g id="decision" data-role="module" data-width="300">
-      <text x="1590" y="244" text-anchor="middle" font-size="31">4 Decision</text>
-      <text x="1590" y="279" text-anchor="middle" fill="#66717a">MOPSO</text>
+      <text id="decision-process-title" data-role="process-title" x="1590" y="244" text-anchor="middle" font-size="28">4 Plan optimization</text>
+      <text id="decision-method-label" data-role="method-label" x="1590" y="279" text-anchor="middle" fill="#66717a">MOPSO</text>
       <g id="decision-axes" data-state="empty-placeholder" stroke="#66717a" stroke-width="2" fill="none">
         <path d="M1508 432 L1680 471 M1508 432 L1580 370 M1508 432 L1508 329"/>
         <polygon points="1687,473 1675,463 1671,477" fill="#66717a" stroke="none"/>

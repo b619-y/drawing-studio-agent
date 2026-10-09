@@ -21,8 +21,24 @@ class WireframeTests(unittest.TestCase):
         self.assertEqual(modules, ["etl", "csm", "twin", "rtm", "decision"])
 
     def test_headers_once(self):
-        for label in ["0 Auto-ETL", "1 CSM", "2 Digital twin", "3 RTM", "4 Decision"]:
+        for label in ["0 Auto-ETL", "1 Conceptualization", "2 Site reconstruction", "3 Reaction prediction", "4 Plan optimization"]:
             self.assertEqual(self.text.count(label), 1)
+
+    def test_process_titles_with_method_subtitles(self):
+        for module, method in [("csm", "CSM"), ("twin", "Digital twin"), ("rtm", "RTM"), ("decision", "MOPSO")]:
+            title = self.nodes[f"{module}-process-title"]
+            subtitle = self.nodes[f"{module}-method-label"]
+            self.assertIn(title, list(self.nodes[module]))
+            self.assertIn(subtitle, list(self.nodes[module]))
+            self.assertEqual(title.get("data-role"), "process-title")
+            self.assertEqual(subtitle.get("data-role"), "method-label")
+            self.assertEqual(subtitle.text, method)
+            self.assertNotIn(method, title.text)
+            self.assertEqual(title.get("x"), subtitle.get("x"))
+            self.assertLess(float(title.get("y")), float(subtitle.get("y")))
+            self.assertGreater(float(title.get("font-size")), float(self.nodes["canvas"].get("font-size")))
+        for old_title in ["1 CSM", "2 Digital twin", "3 RTM"]:
+            self.assertNotIn(old_title, self.text)
 
     def test_twin_largest(self):
         widths = {key: int(self.nodes[key].get("data-width")) for key in ["etl", "csm", "twin", "rtm", "decision"]}

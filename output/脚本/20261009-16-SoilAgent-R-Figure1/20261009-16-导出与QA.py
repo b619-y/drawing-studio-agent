@@ -63,7 +63,7 @@ def export(repo: Path) -> dict:
     converted_bytes = cairosvg.svg2pdf(url=str(source))
     with pymupdf.open("pdf", converted_bytes) as document:
         page = document[0]
-        document.set_metadata({"title": "SoilAgent-R Figure 1 — structure draft", "author": "Drawing studio", "subject": "Conceptual illustration; RTM/Decision layout revision; not publication final"})
+        document.set_metadata({"title": "SoilAgent-R Figure 1 — structure draft", "author": "Drawing studio", "subject": "Conceptual illustration; process titles with method subtitles; not publication final"})
         document.save(figures / f"{STEM}.pdf", garbage=4, deflate=True)
         pixmap = page.get_pixmap(matrix=pymupdf.Matrix(4, 4), alpha=False)
         pixmap.save(figures / f"{STEM}.png")
@@ -87,6 +87,17 @@ def export(repo: Path) -> dict:
             for second in right_labels[index + 1:]:
                 if any((a & b).get_area() > 0.5 for a in right_rects[first] for b in right_rects[second]):
                     collisions.append([first, second])
+        # 仅在标题带查找模型名，避免将资源条中的RTM/MOPSO当成第二个副标题。
+        header_pairs = [("1 Conceptualization", "CSM"), ("2 Site reconstruction", "Digital twin"), ("3 Reaction prediction", "RTM"), ("4 Plan optimization", "MOPSO")]
+        header_clip = pymupdf.Rect(0, rect.height * 200 / 820, rect.width, rect.height * 295 / 820)
+        header_labels = [label for pair in header_pairs for label in pair]
+        header_rects = {label: page.search_for(label, clip=header_clip) for label in header_labels}
+        header_unique = all(len(boxes) == 1 for boxes in header_rects.values())
+        header_collisions = []
+        for index, first in enumerate(header_labels):
+            for second in header_labels[index + 1:]:
+                if any((a & b).get_area() > 0.5 for a in header_rects[first] for b in header_rects[second]):
+                    header_collisions.append([first, second])
         checks = {
             "svg_unique_ids": True,
             "svg_no_raster_or_filter": True,
@@ -100,11 +111,14 @@ def export(repo: Path) -> dict:
             "pdf_dashed_guidance_and_feedback_preserved": dashed_paths >= 2,
             "pdf_right_labels_present_once": all(len(boxes) == 1 for boxes in right_rects.values()),
             "pdf_right_labels_no_text_collision": not collisions,
+            "pdf_process_titles_and_method_subtitles_present_once": header_unique,
+            "pdf_methods_below_process_titles": header_unique and all(header_rects[title][0].y1 < header_rects[method][0].y0 for title, method in header_pairs),
+            "pdf_process_header_labels_no_text_collision": not header_collisions,
             "pdf_width_180mm": abs(rect.width * 25.4 / 72 - 180) < 0.01,
             "pdf_height_82mm": abs(rect.height * 25.4 / 72 - 82) < 0.01,
         }
         receipt = {
-            "stage": "structure_draft_right_side_layout_revision",
+            "stage": "structure_draft_process_heading_revision",
             "source": source.relative_to(repo).as_posix(),
             "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
             "backend": f"CairoSVG {cairosvg.__version__}; PyMuPDF {pymupdf.VersionBind} for PDF QA/render",
@@ -122,6 +136,8 @@ def export(repo: Path) -> dict:
             "clipped_text": clipped,
             "right_label_boxes_pt": {label: [list(box) for box in boxes] for label, boxes in right_rects.items()},
             "right_label_collisions": collisions,
+            "process_header_boxes_pt": {label: [list(box) for box in boxes] for label, boxes in header_rects.items()},
+            "process_header_collisions": header_collisions,
             "png_size_pixels": [pixmap.width, pixmap.height],
             "not_checked_by_this_script": ["visual_layout", "scientific_acceptance", "drawio_desktop_export", "journal_specific_submission_rules"],
         }
