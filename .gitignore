@@ -24,3 +24,10 @@ __pycache__/
 .venv/
 .env
 .env.*
+third_party/
+
+# Upstream copies without a redistribution license or with a no-redistribution notice.
+.agents/skills/plot-from-data/
+.agents/skills/plot-from-image/
+.agents/skills/originals/
+.agents/skills/nature-figure/assets/figures4papers/
