@@ -1,7 +1,7 @@
 {
-  "stage": "structure_draft_four_agent_scopes_single_rtm_balance",
+  "stage": "structure_draft_numbered_agent_scopes_spaced_model_labels",
   "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
-  "source_sha256": "c5a45636c9db3fc51c5cf11dbaede7266bdb559aaa1ee715c2260c28564f0fa4",
+  "source_sha256": "c7e9b3c9b9213464801397fb3885e4fca2867caaae5b7e0e21c46bcc0dc60d09",
   "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
   "typography": {
     "style": "yyc_typography_only",
@@ -32,6 +32,7 @@
     "pdf_model_headers_no_text_collision": true,
     "svg_four_agent_scopes_cover_five_modules": true,
     "pdf_agent_labels_fit_header_frames": true,
+    "pdf_agent_frames_model_labels_spacing": true,
     "pdf_agent_headers_input_feedback_no_text_collision": true,
     "pdf_removed_process_and_figure_notes_absent": true,
     "svg_shared_footer_and_divider_absent": true,
@@ -112,44 +113,44 @@
   },
   "right_label_collisions": [],
   "model_header_boxes_pt": {
-    "0 Auto-ETL": [
+    "Auto-ETL": [
       [
-        21.875,
-        48.738807678222656,
-        68.69428253173828,
-        58.54554748535156
+        25.72265625,
+        54.410682678222656,
+        65.21324157714844,
+        64.21742248535156
       ]
     ],
-    "1 CSM": [
+    "CSM": [
       [
-        107.0078125,
-        48.738807678222656,
-        133.85333251953125,
-        58.54554748535156
+        110.8125,
+        54.410682678222656,
+        130.32931518554688,
+        64.21742248535156
       ]
     ],
-    "2 Digital twin": [
+    "Digital twin": [
       [
-        211.43359375,
-        47.969200134277344,
-        270.8120422363281,
-        58.724979400634766
+        215.22265625,
+        53.641075134277344,
+        266.56317138671875,
+        64.39685821533203
       ]
     ],
-    "3 RTM": [
+    "RTM": [
       [
-        348.3828125,
-        48.738807678222656,
-        374.73626708984375,
-        58.54554748535156
+        351.890625,
+        54.410682678222656,
+        370.9153747558594,
+        64.21742248535156
       ]
     ],
-    "4 MOPSO": [
+    "MOPSO": [
       [
-        444.95703125,
-        48.738807678222656,
-        484.96612548828125,
-        58.54554748535156
+        448.390625,
+        54.410682678222656,
+        481.0710144042969,
+        64.21742248535156
       ]
     ]
   },
@@ -160,36 +161,49 @@
     "prediction-agent": "rtm",
     "decision-agent": "decision"
   },
+  "agent_step_indices": {
+    "site-agent": "0,1",
+    "twin-agent": "2",
+    "prediction-agent": "3",
+    "decision-agent": "4"
+  },
+  "agent_frame_to_model_label_gaps_pt": {
+    "etl": 7.639030456542969,
+    "csm": 7.639030456542969,
+    "twin": 6.869422912597656,
+    "rtm": 7.639030456542969,
+    "decision": 7.639030456542969
+  },
   "agent_label_boxes_pt": {
-    "Site cognition agent": [
+    "0–1 Site cognition agent": [
       [
-        49.03125,
+        41.8359375,
         36.134765625,
-        119.38603973388672,
+        126.52552795410156,
         44.35977554321289
       ]
     ],
-    "Digital twin agent": [
+    "2 Digital twin agent": [
       [
-        210.21875,
+        207.3203125,
         36.134765625,
-        271.1693420410156,
+        274.4175720214844,
         44.35977554321289
       ]
     ],
-    "Prediction agent": [
+    "3 Prediction agent": [
       [
-        332.32421875,
+        329.37890625,
         36.134765625,
-        390.0099182128906,
+        393.2112731933594,
         44.35977554321289
       ]
     ],
-    "Decision agent": [
+    "4 Decision agent": [
       [
-        438.44921875,
+        435.57421875,
         36.134765625,
-        490.8284606933594,
+        494.0927429199219,
         44.35977554321289
       ]
     ]
@@ -214,11 +228,11 @@
   ],
   "partition_equation_displayed": false,
   "module_title_baselines_svg": [
-    "200",
-    "200",
-    "200",
-    "200",
-    "200"
+    "220",
+    "220",
+    "220",
+    "220",
+    "220"
   ],
   "module_annotation_final_baselines_svg": [
     "590",

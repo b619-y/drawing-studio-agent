@@ -14,25 +14,25 @@
       <text x="1100" y="38" text-anchor="middle" fill="#66717a" stroke="none">User revises goals</text>
     </g>
     <g id="agent-scopes" data-status="user-selected-responsibility-grouping">
-      <g id="site-agent" data-role="agent-scope" data-modules="etl,csm">
+      <g id="site-agent" data-role="agent-scope" data-modules="etl,csm" data-step-indices="0,1">
         <rect x="60" y="120" width="475" height="45" fill="none" stroke="#8b949b" stroke-width="1.5"/>
-        <text id="site-agent-label" x="297.5" y="151" text-anchor="middle">Site cognition agent</text>
+        <text id="site-agent-label" x="297.5" y="151" text-anchor="middle">0–1 Site cognition agent</text>
       </g>
-      <g id="twin-agent" data-role="agent-scope" data-modules="twin">
+      <g id="twin-agent" data-role="agent-scope" data-modules="twin" data-step-indices="2">
         <rect x="670" y="120" width="360" height="45" fill="none" stroke="#8b949b" stroke-width="1.5"/>
-        <text id="twin-agent-label" x="850" y="151" text-anchor="middle">Digital twin agent</text>
+        <text id="twin-agent-label" x="850" y="151" text-anchor="middle">2 Digital twin agent</text>
       </g>
-      <g id="prediction-agent" data-role="agent-scope" data-modules="rtm">
+      <g id="prediction-agent" data-role="agent-scope" data-modules="rtm" data-step-indices="3">
         <rect x="1150" y="120" width="250" height="45" fill="none" stroke="#8b949b" stroke-width="1.5"/>
-        <text id="prediction-agent-label" x="1275" y="151" text-anchor="middle">Prediction agent</text>
+        <text id="prediction-agent-label" x="1275" y="151" text-anchor="middle">3 Prediction agent</text>
       </g>
-      <g id="decision-agent" data-role="agent-scope" data-modules="decision">
+      <g id="decision-agent" data-role="agent-scope" data-modules="decision" data-step-indices="4">
         <rect x="1500" y="120" width="280" height="45" fill="none" stroke="#8b949b" stroke-width="1.5"/>
-        <text id="decision-agent-label" x="1640" y="151" text-anchor="middle">Decision agent</text>
+        <text id="decision-agent-label" x="1640" y="151" text-anchor="middle">4 Decision agent</text>
       </g>
     </g>
     <g id="etl" data-role="module" data-width="200">
-      <text id="etl-method-label" data-role="module-title" x="160" y="200" text-anchor="middle" font-size="31">0 Auto-ETL</text>
+      <text id="etl-method-label" data-role="module-title" x="160" y="220" text-anchor="middle" font-size="31">Auto-ETL</text>
       <g id="etl-documents" transform="translate(0 -28)" stroke="#66717a" stroke-width="2" fill="none">
         <path d="M78 316 L143 316 L166 339 L166 412 L78 412 Z M143 316 L143 339 L166 339"/>
         <path d="M94 354 L146 354 M94 372 L146 372 M94 390 L129 390"/>
@@ -45,7 +45,7 @@
       </g>
     </g>
     <g id="csm" data-role="module" data-width="210">
-      <text id="csm-method-label" data-role="module-title" x="425" y="200" text-anchor="middle" font-size="31">1 CSM</text>
+      <text id="csm-method-label" data-role="module-title" x="425" y="220" text-anchor="middle" font-size="31">CSM</text>
       <g id="csm-profile" stroke="#66717a" stroke-width="2" fill="none">
         <path d="M323 368 L533 368 M323 438 L533 438 M323 508 L533 508"/>
         <path d="M337 367 L337 290 L366 290 L366 367 M333 291 L370 291"/>
@@ -59,7 +59,7 @@
       </g>
     </g>
     <g id="twin" data-role="module" data-width="520">
-      <text id="twin-method-label" data-role="module-title" x="850" y="200" text-anchor="middle" font-size="34" fill="#45656a">2 Digital twin</text>
+      <text id="twin-method-label" data-role="module-title" x="850" y="220" text-anchor="middle" font-size="34" fill="#45656a">Digital twin</text>
       <g id="conceptual-soil-block" transform="translate(0 -44)" stroke="#708388" stroke-width="2" fill="none">
         <path d="M636 387 L954 387 L1075 304 L756 304 Z" fill="#f3f6f6"/>
         <path d="M636 387 L954 387 L954 552 L636 552 Z" fill="#fafbfb"/>
@@ -76,7 +76,7 @@
       </g>
     </g>
     <g id="rtm" data-role="module" data-width="210">
-      <text id="rtm-method-label" data-role="module-title" x="1275" y="200" text-anchor="middle" font-size="31">3 RTM</text>
+      <text id="rtm-method-label" data-role="module-title" x="1275" y="220" text-anchor="middle" font-size="31">RTM</text>
       <g id="rtm-time-states" stroke="#66717a" stroke-width="2" fill="none">
         <rect x="1196" y="288" width="108" height="55"/>
         <path d="M1232 288 L1232 343 M1268 288 L1268 343 M1196 315 L1304 315"/>
@@ -98,7 +98,7 @@
       </g>
     </g>
     <g id="decision" data-role="module" data-width="300">
-      <text id="decision-method-label" data-role="module-title" x="1640" y="200" text-anchor="middle" font-size="31">4 MOPSO</text>
+      <text id="decision-method-label" data-role="module-title" x="1640" y="220" text-anchor="middle" font-size="31">MOPSO</text>
       <g id="decision-axes" data-state="empty-placeholder" stroke="#66717a" stroke-width="2" fill="none">
         <path d="M1545 417 L1725 459 M1545 417 L1627 342 M1545 417 L1545 280"/>
         <polygon points="1732,461 1720,451 1716,465" fill="#66717a" stroke="none"/>
@@ -110,16 +110,16 @@
       </g>
     </g>
     <g id="etl-to-csm" data-source="etl" data-target="csm" stroke="#56616a" stroke-width="2" fill="none">
-      <path d="M270 187 L313 187"/>
-      <polygon points="321,187 308,180 308,194" fill="#56616a" stroke="none"/>
+      <path d="M270 207 L313 207"/>
+      <polygon points="321,207 308,200 308,214" fill="#56616a" stroke="none"/>
     </g>
     <g id="csm-to-twin" data-source="csm" data-target="twin" data-status="method-guidance" stroke="#8b949b" stroke-width="2" stroke-dasharray="8 6" fill="none">
-      <path d="M530 187 L683 187"/>
-      <polygon points="691,187 678,180 678,194" fill="#8b949b" stroke="none"/>
+      <path d="M530 207 L683 207"/>
+      <polygon points="691,207 678,200 678,214" fill="#8b949b" stroke="none"/>
     </g>
     <g id="twin-to-rtm" data-source="twin" data-target="rtm" stroke="#56616a" stroke-width="2" fill="none">
-      <path d="M1040 187 L1163 187"/>
-      <polygon points="1171,187 1158,180 1158,194" fill="#56616a" stroke="none"/>
+      <path d="M1040 207 L1163 207"/>
+      <polygon points="1171,207 1158,200 1158,214" fill="#56616a" stroke="none"/>
     </g>
     <g id="rtm-to-decision" data-source="rtm" data-target="decision" stroke="#56616a" stroke-width="2" fill="none">
       <path d="M1375 346 L1490 346"/>

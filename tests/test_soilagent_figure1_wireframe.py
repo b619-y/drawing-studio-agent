@@ -29,7 +29,10 @@ class WireframeTests(unittest.TestCase):
         covered = [module for n in groups for module in n.get("data-modules").split(",")]
         self.assertEqual(covered, ["etl", "csm", "twin", "rtm", "decision"])
         self.assertEqual(self.nodes["agent-scopes"].get("data-status"), "user-selected-responsibility-grouping")
-        for label in ["Site cognition agent", "Digital twin agent", "Prediction agent", "Decision agent"]:
+        self.assertEqual({n.get("id"): n.get("data-step-indices") for n in groups}, {
+            "site-agent": "0,1", "twin-agent": "2", "prediction-agent": "3", "decision-agent": "4",
+        })
+        for label in ["0–1 Site cognition agent", "2 Digital twin agent", "3 Prediction agent", "4 Decision agent"]:
             self.assertEqual(self.text.count(label), 1)
         self.assertNotIn("Technical evidence agent", self.text)
         self.assertIn("not verified independent autonomous runtimes", self.root.find(NS + "desc").text)
@@ -44,20 +47,22 @@ class WireframeTests(unittest.TestCase):
             self.assertLessEqual(float(frame.get("stroke-width")), 2)
             self.assertEqual(label.get("y"), "151")
             self.assertAlmostEqual(float(label.get("x")), float(frame.get("x")) + float(frame.get("width")) / 2)
-            self.assertLess(float(frame.get("y")) + float(frame.get("height")), 200)
+            for module in node.get("data-modules").split(","):
+                baseline = float(self.nodes[f"{module}-method-label"].get("y"))
+                self.assertGreaterEqual(baseline - (float(frame.get("y")) + float(frame.get("height"))), 50)
             self.assertEqual([n.tag for n in node], [NS + "rect", NS + "text"])
 
     def test_headers_once(self):
-        for label in ["0 Auto-ETL", "1 CSM", "2 Digital twin", "3 RTM", "4 MOPSO"]:
-            self.assertEqual(self.text.count(label), 1)
+        labels = [n.text for n in self.root.iter() if n.get("data-role") == "module-title"]
+        self.assertEqual(labels, ["Auto-ETL", "CSM", "Digital twin", "RTM", "MOPSO"])
 
     def test_model_only_titles(self):
-        for module, label in [("etl", "0 Auto-ETL"), ("csm", "1 CSM"), ("twin", "2 Digital twin"), ("rtm", "3 RTM"), ("decision", "4 MOPSO")]:
+        for module, label in [("etl", "Auto-ETL"), ("csm", "CSM"), ("twin", "Digital twin"), ("rtm", "RTM"), ("decision", "MOPSO")]:
             title = self.nodes[f"{module}-method-label"]
             self.assertIn(title, list(self.nodes[module]))
             self.assertEqual(title.get("data-role"), "module-title")
             self.assertEqual(title.text, label)
-            self.assertEqual(title.get("y"), "200")
+            self.assertEqual(title.get("y"), "220")
         self.assertFalse(any(n.get("data-role") in {"process-title", "method-label"} for n in self.root.iter()))
         for old_title in ["Conceptualization", "Site reconstruction", "Reaction prediction", "Plan optimization"]:
             self.assertNotIn(old_title, self.text)

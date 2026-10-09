@@ -94,8 +94,8 @@ def export(repo: Path) -> dict:
                                 rect.width * right / view_width, rect.height * bottom / view_height)
 
         # 仅在共同标题带查找；画幅高度不参与字体或坐标的缩放。
-        header_clip = svg_band(0, 160, view_width, 225)
-        header_labels = ["0 Auto-ETL", "1 CSM", "2 Digital twin", "3 RTM", "4 MOPSO"]
+        header_clip = svg_band(0, 180, view_width, 245)
+        header_labels = ["Auto-ETL", "CSM", "Digital twin", "RTM", "MOPSO"]
         header_rects = {label: page.search_for(label, clip=header_clip) for label in header_labels}
         header_unique = all(len(boxes) == 1 for boxes in header_rects.values())
         header_collisions = []
@@ -108,6 +108,7 @@ def export(repo: Path) -> dict:
         expected_agent_mappings = {"site-agent": "etl,csm", "twin-agent": "twin", "prediction-agent": "rtm", "decision-agent": "decision"}
         agent_rects = {}
         agent_fit = []
+        agent_header_gaps = {}
         for group in agent_groups:
             label = group.find(NS + "text").text
             frame = group.find(NS + "rect")
@@ -116,6 +117,11 @@ def export(repo: Path) -> dict:
             boxes = page.search_for(label)
             agent_rects[label] = boxes
             agent_fit.append(len(boxes) == 1 and frame_rect.contains(boxes[0]))
+            for module in group.get("data-modules").split(","):
+                module_label = nodes[f"{module}-method-label"].text
+                boxes_below = header_rects[module_label]
+                if len(boxes_below) == 1:
+                    agent_header_gaps[module] = boxes_below[0].y0 - frame_rect.y1
         top_rects = {**agent_rects, **header_rects,
                      "Research goal / site information": page.search_for("Research goal / site information"),
                      "User revises goals": page.search_for("User revises goals")}
@@ -165,6 +171,8 @@ def export(repo: Path) -> dict:
             "pdf_model_headers_no_text_collision": not header_collisions,
             "svg_four_agent_scopes_cover_five_modules": agent_mappings == expected_agent_mappings and len(agent_groups) == 4,
             "pdf_agent_labels_fit_header_frames": len(agent_fit) == 4 and all(agent_fit),
+            # 按最终PDF字形包围盒，框底至模型名至少留2 mm，而非按文字基线估距。
+            "pdf_agent_frames_model_labels_spacing": len(agent_header_gaps) == 5 and min(agent_header_gaps.values()) >= 72 * 2 / 25.4,
             "pdf_agent_headers_input_feedback_no_text_collision": not top_collisions,
             "pdf_removed_process_and_figure_notes_absent": all(label not in visible_text for label in removed_labels),
             "svg_shared_footer_and_divider_absent": "shared-resources" not in ids and not any(n.get("d") == "M60 755 L1740 755" for n in root.iter(NS + "path")),
@@ -174,7 +182,7 @@ def export(repo: Path) -> dict:
             "pdf_rtm_only_one_equation_equals_sign": len(equals_rects) == 1,
             "pdf_rtm_balance_centered_under_header": balance_centered,
             "svg_partition_equation_removed": partition_absent,
-            "svg_five_title_baselines_aligned": len(header_baselines) == 5 and set(header_baselines) == {"200"},
+            "svg_five_title_baselines_aligned": len(header_baselines) == 5 and set(header_baselines) == {"220"},
             "svg_five_annotation_final_baselines_aligned": final_baselines == ["590"] * 5,
             "svg_compact_bottom_margin": view_height - float(final_baselines[0]) == 40,
             "pdf_conc_axis_replaces_time": len(right_rects["CONC"]) == 1 and "TIME" not in visible_text,
@@ -182,7 +190,7 @@ def export(repo: Path) -> dict:
             "pdf_height_63mm": abs(rect.height * 25.4 / 72 - 63) < 0.01,
         }
         receipt = {
-            "stage": "structure_draft_four_agent_scopes_single_rtm_balance",
+            "stage": "structure_draft_numbered_agent_scopes_spaced_model_labels",
             "source": source.relative_to(repo).as_posix(),
             "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
             "backend": f"CairoSVG {cairosvg.__version__}; PyMuPDF {pymupdf.VersionBind} for PDF QA/render",
@@ -203,6 +211,8 @@ def export(repo: Path) -> dict:
             "model_header_boxes_pt": {label: [list(box) for box in boxes] for label, boxes in header_rects.items()},
             "model_header_collisions": header_collisions,
             "agent_responsibility_mapping": agent_mappings,
+            "agent_step_indices": {group.get("id"): group.get("data-step-indices") for group in agent_groups},
+            "agent_frame_to_model_label_gaps_pt": agent_header_gaps,
             "agent_label_boxes_pt": {label: [list(box) for box in boxes] for label, boxes in agent_rects.items()},
             "top_label_collisions": top_collisions,
             "formula_boxes_pt": {name: list(box) for name, box in formula_rects.items()},
