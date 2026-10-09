@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="82mm" viewBox="0 0 1800 820">
   <title>SoilAgent-R: evidence-grounded architecture, structure draft</title>
   <desc>Five modules. The digital twin is a conceptual illustration, not a measured field. Dashed links denote methodological guidance or user revision. Decision axes contain no candidate data.</desc>
-  <g id="canvas" font-family="DejaVu Sans" font-size="26" fill="#303840" stroke-linejoin="round" stroke-linecap="round">
+  <g id="canvas" font-family="Arial" font-weight="700" font-size="26" fill="#303840" stroke-linejoin="round" stroke-linecap="round">
     <rect width="1800" height="820" fill="white"/>
     <g id="research-input" data-role="input">
       <text x="60" y="111" font-size="30">Research goal / site information</text>
@@ -62,8 +62,8 @@
         <path d="M1248 365 L1248 382"/>
         <polygon points="1248,388 1242,378 1254,378" fill="#66717a" stroke="none"/>
       </g>
-      <text x="1317" y="343">t₀</text>
-      <text x="1317" y="426">t₁</text>
+      <text id="rtm-time-0" x="1317" y="343" data-time-index="0">t<tspan font-size="22" dy="8">0</tspan></text>
+      <text id="rtm-time-1" x="1317" y="426" data-time-index="1">t<tspan font-size="22" dy="8">1</tspan></text>
       <text x="1275" y="480" text-anchor="middle">Time evolution</text>
       <text x="1275" y="675" text-anchor="middle">Mass checks</text>
     </g>

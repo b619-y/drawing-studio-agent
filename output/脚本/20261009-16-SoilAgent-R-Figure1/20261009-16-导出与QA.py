@@ -5,14 +5,46 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 import xml.etree.ElementTree as ET
 
 import cairosvg
+from fontTools.ttLib import TTFont
 import pymupdf
 
 THEME = "20261009-16-SoilAgent-R-Figure1"
 STEM = "20261009-16-系统架构-结构草图"
 NS = "{http://www.w3.org/2000/svg}"
+
+
+def check_arial(root: ET.Element) -> dict:
+    """缺真正Arial Bold或缺字符就报错，不静默替换为Liberation/DejaVu。"""
+    resolved = subprocess.run(
+        ["fc-match", "-f", "%{file}", "Arial:style=Bold"],
+        check=True, capture_output=True, text=True,
+    ).stdout.strip()
+    with TTFont(resolved) as font:
+        family = font["name"].getDebugName(1)
+        face = font["name"].getDebugName(2)
+        if family != "Arial" or face != "Bold":
+            raise RuntimeError(f"需要真正Arial Bold，当前匹配为 {family} / {face}")
+        visible = "".join("".join(n.itertext()) for n in root.iter(NS + "text"))
+        cmap = font.getBestCmap()
+        missing = sorted({ch for ch in visible if not ch.isspace() and ord(ch) not in cmap})
+        if missing:
+            raise RuntimeError(f"Arial Bold缺字符：{missing}；请用可编辑tspan实现上下标")
+        return {
+            "style": "yyc_typography_only",
+            "requested_family": "Arial",
+            "requested_face": "Bold",
+            "resolved_family": family,
+            "resolved_face": face,
+            "font_filename": Path(resolved).name,
+            "font_sha256": hashlib.sha256(Path(resolved).read_bytes()).hexdigest(),
+            "font_version": font["name"].getDebugName(5),
+            "font_embedding_fstype": font["OS/2"].fsType,
+            "missing_visible_glyphs": missing,
+        }
 
 
 def export(repo: Path) -> dict:
@@ -25,12 +57,13 @@ def export(repo: Path) -> dict:
     forbidden = {"image", "script", "foreignObject", "filter", "linearGradient", "radialGradient"}
     assert not any(n.tag.removeprefix(NS) in forbidden for n in root.iter()), "SVG含禁用元素"
     assert root.get("width") == "180mm" and root.get("height") == "82mm"
+    typography = check_arial(root)
 
     # CairoSVG保留字体和虚线；PyMuPDF的SVG转换会丢失dash，不能用作本图导出器。
     converted_bytes = cairosvg.svg2pdf(url=str(source))
     with pymupdf.open("pdf", converted_bytes) as document:
         page = document[0]
-        document.set_metadata({"title": "SoilAgent-R Figure 1 — structure draft", "author": "Drawing studio", "subject": "Conceptual illustration; awaiting structure review"})
+        document.set_metadata({"title": "SoilAgent-R Figure 1 — structure draft", "author": "Drawing studio", "subject": "Conceptual illustration; yyc Arial Bold revision; not publication final"})
         document.save(figures / f"{STEM}.pdf", garbage=4, deflate=True)
         pixmap = page.get_pixmap(matrix=pymupdf.Matrix(4, 4), alpha=False)
         pixmap.save(figures / f"{STEM}.png")
@@ -41,6 +74,8 @@ def export(repo: Path) -> dict:
         rect = page.rect
         clipped = [s["text"] for s in spans if not rect.contains(pymupdf.Rect(s["bbox"]))]
         min_font = min(s["size"] for s in spans)
+        main_spans = [s for s in spans if s["size"] >= 7.0]
+        small_spans = [s for s in spans if s["size"] < 7.0]
         drawings = page.get_drawings()
         dashed_paths = sum(bool(d.get("dashes")) and not d["dashes"].startswith("[]") for d in drawings)
         fonts = sorted({s["font"] for s in spans})
@@ -51,21 +86,24 @@ def export(repo: Path) -> dict:
             "pdf_no_image_objects": len(page.get_images(full=True)) == 0,
             "pdf_text_present": len(spans) > 20,
             "pdf_text_inside_page": not clipped,
-            "pdf_minimum_font_7pt": min_font >= 7.0,
-            "pdf_sans_font_preserved": all("DejaVuSans" in f for f in fonts),
+            "pdf_main_labels_minimum_font_7pt": bool(main_spans) and min(s["size"] for s in main_spans) >= 7.0,
+            "pdf_only_time_subscripts_below_7pt": len(small_spans) == 2 and {s["text"].strip() for s in small_spans} == {"0", "1"} and min_font >= 6.0,
+            "pdf_arial_bold_no_fallback": all("Arial" in f and "Bold" in f for f in fonts),
             "pdf_dashed_guidance_and_feedback_preserved": dashed_paths >= 2,
             "pdf_width_180mm": abs(rect.width * 25.4 / 72 - 180) < 0.01,
             "pdf_height_82mm": abs(rect.height * 25.4 / 72 - 82) < 0.01,
         }
         receipt = {
-            "stage": "structure_draft_awaiting_user_review",
+            "stage": "structure_draft_yyc_font_revision",
             "source": source.relative_to(repo).as_posix(),
             "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
             "backend": f"CairoSVG {cairosvg.__version__}; PyMuPDF {pymupdf.VersionBind} for PDF QA/render",
+            "typography": typography,
             "checks": checks,
             "pdf_width_mm": rect.width * 25.4 / 72,
             "pdf_height_mm": rect.height * 25.4 / 72,
             "pdf_minimum_font_pt": min_font,
+            "pdf_main_label_minimum_font_pt": min(s["size"] for s in main_spans),
             "pdf_text_spans": len(spans),
             "pdf_vector_drawings": len(drawings),
             "pdf_fonts": fonts,

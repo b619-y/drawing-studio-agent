@@ -67,6 +67,25 @@ class WireframeTests(unittest.TestCase):
         self.assertEqual(self.nodes["user-feedback"].get("data-status"), "manual")
         self.assertIsNotNone(self.nodes["user-feedback"].get("stroke-dasharray"))
 
+    def test_yyc_arial_bold_typography(self):
+        canvas = self.nodes["canvas"]
+        self.assertEqual(canvas.get("font-family"), "Arial")
+        self.assertEqual(canvas.get("font-weight"), "700")
+        for node in canvas.iter():
+            if node.get("font-family"):
+                self.assertEqual(node.get("font-family"), "Arial")
+            if node.get("font-weight"):
+                self.assertEqual(node.get("font-weight"), "700")
+
+    def test_editable_time_subscripts(self):
+        for index in [0, 1]:
+            node = self.nodes[f"rtm-time-{index}"]
+            self.assertEqual(node.get("data-time-index"), str(index))
+            self.assertEqual(node.text, "t")
+            subscript = node.find(NS + "tspan")
+            self.assertEqual(subscript.text, str(index))
+            self.assertGreater(float(subscript.get("dy")), 0)
+
     def test_no_external_refs(self):
         for node in self.root.iter():
             for key, value in node.attrib.items():

@@ -1,8 +1,20 @@
 {
-  "stage": "structure_draft_awaiting_user_review",
+  "stage": "structure_draft_yyc_font_revision",
   "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
-  "source_sha256": "64bd23b153b18721f9b2a06f5d1de234591bdf076a0cf8e7fac12fa1fd005fc5",
+  "source_sha256": "cd7eb5e604d5d1baacd412866164b0557ced8abb4b81504c0c5ae9e43d00761c",
   "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
+  "typography": {
+    "style": "yyc_typography_only",
+    "requested_family": "Arial",
+    "requested_face": "Bold",
+    "resolved_family": "Arial",
+    "resolved_face": "Bold",
+    "font_filename": "Arialbd.TTF",
+    "font_sha256": "4044aa6b5bebbc36980206b45b0aaaaa5681552a48bcadb41746d5d1d71fd7b4",
+    "font_version": "Version 2.82",
+    "font_embedding_fstype": 0,
+    "missing_visible_glyphs": []
+  },
   "checks": {
     "svg_unique_ids": true,
     "svg_no_raster_or_filter": true,
@@ -10,19 +22,21 @@
     "pdf_no_image_objects": true,
     "pdf_text_present": true,
     "pdf_text_inside_page": true,
-    "pdf_minimum_font_7pt": true,
-    "pdf_sans_font_preserved": true,
+    "pdf_main_labels_minimum_font_7pt": true,
+    "pdf_only_time_subscripts_below_7pt": true,
+    "pdf_arial_bold_no_fallback": true,
     "pdf_dashed_guidance_and_feedback_preserved": true,
     "pdf_width_180mm": true,
     "pdf_height_82mm": true
   },
   "pdf_width_mm": 179.99999491373697,
   "pdf_height_mm": 82.00000127156575,
-  "pdf_minimum_font_pt": 7.370079040527344,
-  "pdf_text_spans": 140,
+  "pdf_minimum_font_pt": 6.236219882965088,
+  "pdf_main_label_minimum_font_pt": 7.370079040527344,
+  "pdf_text_spans": 32,
   "pdf_vector_drawings": 45,
   "pdf_fonts": [
-    "DejaVuSans"
+    "Arial-BoldMT"
   ],
   "pdf_dashed_paths": 2,
   "pdf_image_objects": 0,
