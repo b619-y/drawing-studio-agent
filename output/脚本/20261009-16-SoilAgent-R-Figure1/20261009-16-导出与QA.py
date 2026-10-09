@@ -56,7 +56,9 @@ def export(repo: Path) -> dict:
     assert len(ids) == len(set(ids)), "SVG ID 重复"
     forbidden = {"image", "script", "foreignObject", "filter", "linearGradient", "radialGradient"}
     assert not any(n.tag.removeprefix(NS) in forbidden for n in root.iter()), "SVG含禁用元素"
-    assert root.get("width") == "180mm" and root.get("height") == "82mm"
+    assert root.get("width") == "180mm" and root.get("height") == "63mm"
+    _, _, view_width, view_height = map(float, root.get("viewBox").split())
+    nodes = {node.get("id"): node for node in root.iter() if node.get("id")}
     typography = check_arial(root)
 
     # CairoSVG保留字体和虚线；PyMuPDF的SVG转换会丢失dash，不能用作本图导出器。
@@ -87,8 +89,12 @@ def export(repo: Path) -> dict:
             for second in right_labels[index + 1:]:
                 if any((a & b).get_area() > 0.5 for a in right_rects[first] for b in right_rects[second]):
                     collisions.append([first, second])
-        # 仅在标题带查找，避免将资源条中的RTM/MOPSO当成重复标题。
-        header_clip = pymupdf.Rect(0, rect.height * 200 / 820, rect.width, rect.height * 295 / 820)
+        def svg_band(left, top, right, bottom):
+            return pymupdf.Rect(rect.width * left / view_width, rect.height * top / view_height,
+                                rect.width * right / view_width, rect.height * bottom / view_height)
+
+        # 仅在共同标题带查找；画幅高度不参与字体或坐标的缩放。
+        header_clip = svg_band(0, 160, view_width, 225)
         header_labels = ["0 Auto-ETL", "1 CSM", "2 Digital twin", "3 RTM", "4 MOPSO"]
         header_rects = {label: page.search_for(label, clip=header_clip) for label in header_labels}
         header_unique = all(len(boxes) == 1 for boxes in header_rects.values())
@@ -100,10 +106,10 @@ def export(repo: Path) -> dict:
         visible_text = " ".join(s["text"] for s in spans)
         removed_labels = ["Conceptualization", "Site reconstruction", "Reaction prediction", "Plan optimization", "Color: CONC", "STRUCTURE DRAFT", "Dashed:", "Conceptual illustration / not to scale", "Geometry / initial fields / support", "Time evolution", "Mass checks"]
         allowed_subscripts = sorted(n.text.strip() for n in root.iter(NS + "tspan") if n.get("dy") == "8")
-        formula_bands = {"balance": (480, 529), "partition": (530, 580)}
+        formula_bands = {"balance": (490, 565), "partition": (565, 615)}
         formula_rects = {}
         for name, (top, bottom) in formula_bands.items():
-            band = pymupdf.Rect(rect.width * 1100 / 1800, rect.height * top / 820, rect.width * 1450 / 1800, rect.height * bottom / 820)
+            band = svg_band(1175, top, 1365, bottom)
             members = [s for s in spans if band.contains(pymupdf.Rect(s["bbox"]))]
             if members:
                 box = pymupdf.Rect(members[0]["bbox"])
@@ -111,6 +117,12 @@ def export(repo: Path) -> dict:
                     box |= pymupdf.Rect(member["bbox"])
                 formula_rects[name] = box
         formula_collisions = [[name, label] for name, box in formula_rects.items() for label, boxes in right_rects.items() if any((box & other).get_area() > 0.5 for other in boxes)]
+        equals_rects = page.search_for("=", clip=svg_band(1238, 505, 1265, 615))
+        equals_aligned = len(equals_rects) == 2 and abs(equals_rects[0].x0 - equals_rects[1].x0) < 0.1
+        formula_rows_overlap = len(formula_rects) == 2 and (formula_rects["balance"] & formula_rects["partition"]).get_area() > 0.5
+        annotation_groups = [nodes[name] for name in ["etl-annotations", "csm-annotations", "twin-parameter-fields", "rtm-equations", "decision-output"]]
+        final_baselines = [group.get("data-final-baseline") for group in annotation_groups]
+        header_baselines = [node.get("y") for node in root.iter() if node.get("data-role") == "module-title"]
         checks = {
             "svg_unique_ids": True,
             "svg_no_raster_or_filter": True,
@@ -129,14 +141,19 @@ def export(repo: Path) -> dict:
             "pdf_removed_process_and_figure_notes_absent": all(label not in visible_text for label in removed_labels),
             "svg_shared_footer_and_divider_absent": "shared-resources" not in ids and not any(n.get("d") == "M60 755 L1740 755" for n in root.iter(NS + "path")),
             "pdf_shared_footer_absent": "Shared data / tools" not in visible_text,
-            "pdf_rtm_formulas_present": set(formula_rects) == set(formula_bands) and bool(page.search_for("dM/dt")) and bool(page.search_for("∑F")),
+            "pdf_rtm_formulas_present": set(formula_rects) == set(formula_bands) and bool(page.search_for("dM")) and bool(page.search_for("dt")) and bool(page.search_for("∑F")),
             "pdf_rtm_formulas_no_label_collision": not formula_collisions,
+            "pdf_rtm_equal_signs_aligned": equals_aligned,
+            "pdf_rtm_formula_rows_nonoverlapping": not formula_rows_overlap,
+            "svg_five_title_baselines_aligned": len(header_baselines) == 5 and set(header_baselines) == {"200"},
+            "svg_five_annotation_final_baselines_aligned": final_baselines == ["590"] * 5,
+            "svg_compact_bottom_margin": view_height - float(final_baselines[0]) == 40,
             "pdf_conc_axis_replaces_time": len(right_rects["CONC"]) == 1 and "TIME" not in visible_text,
             "pdf_width_180mm": abs(rect.width * 25.4 / 72 - 180) < 0.01,
-            "pdf_height_82mm": abs(rect.height * 25.4 / 72 - 82) < 0.01,
+            "pdf_height_63mm": abs(rect.height * 25.4 / 72 - 63) < 0.01,
         }
         receipt = {
-            "stage": "structure_draft_eight_fields_and_rtm_equations",
+            "stage": "structure_draft_compact_aligned_layout",
             "source": source.relative_to(repo).as_posix(),
             "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
             "backend": f"CairoSVG {cairosvg.__version__}; PyMuPDF {pymupdf.VersionBind} for PDF QA/render",
@@ -158,6 +175,10 @@ def export(repo: Path) -> dict:
             "model_header_collisions": header_collisions,
             "formula_boxes_pt": {name: list(box) for name, box in formula_rects.items()},
             "formula_label_collisions": formula_collisions,
+            "rtm_equal_sign_boxes_pt": [list(box) for box in equals_rects],
+            "formula_rows_overlap": formula_rows_overlap,
+            "module_title_baselines_svg": header_baselines,
+            "module_annotation_final_baselines_svg": final_baselines,
             "png_size_pixels": [pixmap.width, pixmap.height],
             "not_checked_by_this_script": ["visual_layout", "scientific_acceptance", "drawio_desktop_export", "journal_specific_submission_rules"],
         }
