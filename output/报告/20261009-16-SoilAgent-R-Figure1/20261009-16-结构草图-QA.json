@@ -1,0 +1,40 @@
+{
+  "stage": "structure_draft_awaiting_user_review",
+  "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
+  "source_sha256": "64bd23b153b18721f9b2a06f5d1de234591bdf076a0cf8e7fac12fa1fd005fc5",
+  "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
+  "checks": {
+    "svg_unique_ids": true,
+    "svg_no_raster_or_filter": true,
+    "pdf_single_page": true,
+    "pdf_no_image_objects": true,
+    "pdf_text_present": true,
+    "pdf_text_inside_page": true,
+    "pdf_minimum_font_7pt": true,
+    "pdf_sans_font_preserved": true,
+    "pdf_dashed_guidance_and_feedback_preserved": true,
+    "pdf_width_180mm": true,
+    "pdf_height_82mm": true
+  },
+  "pdf_width_mm": 179.99999491373697,
+  "pdf_height_mm": 82.00000127156575,
+  "pdf_minimum_font_pt": 7.370079040527344,
+  "pdf_text_spans": 140,
+  "pdf_vector_drawings": 45,
+  "pdf_fonts": [
+    "DejaVuSans"
+  ],
+  "pdf_dashed_paths": 2,
+  "pdf_image_objects": 0,
+  "clipped_text": [],
+  "png_size_pixels": [
+    2041,
+    930
+  ],
+  "not_checked_by_this_script": [
+    "visual_layout",
+    "scientific_acceptance",
+    "drawio_desktop_export",
+    "journal_specific_submission_rules"
+  ]
+}

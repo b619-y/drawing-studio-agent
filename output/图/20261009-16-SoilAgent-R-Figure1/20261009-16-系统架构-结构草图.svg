@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="82mm" viewBox="0 0 1800 820">
+  <title>SoilAgent-R: evidence-grounded architecture, structure draft</title>
+  <desc>Five modules. The digital twin is a conceptual illustration, not a measured field. Dashed links denote methodological guidance or user revision. Decision axes contain no candidate data.</desc>
+  <g id="canvas" font-family="DejaVu Sans" font-size="26" fill="#303840" stroke-linejoin="round" stroke-linecap="round">
+    <rect width="1800" height="820" fill="white"/>
+    <g id="research-input" data-role="input">
+      <text x="60" y="111" font-size="30">Research goal / site information</text>
+      <path d="M160 130 L160 189" fill="none" stroke="#56616a" stroke-width="2"/>
+      <polygon points="160,197 153,184 167,184" fill="#56616a"/>
+    </g>
+    <g id="user-feedback" data-source="decision" data-target="research-input" data-status="manual" stroke="#8b949b" stroke-width="2" stroke-dasharray="9 7" fill="none">
+      <path d="M1670 204 L1670 48 L540 48 L540 77"/>
+      <polygon points="540,85 533,72 547,72" fill="#8b949b" stroke="none"/>
+      <text x="1100" y="38" text-anchor="middle" fill="#66717a" stroke="none">User revises goals</text>
+    </g>
+    <g id="etl" data-role="module" data-width="200">
+      <text x="160" y="244" text-anchor="middle" font-size="31">0 Auto-ETL</text>
+      <g id="etl-documents" stroke="#66717a" stroke-width="2" fill="none">
+        <path d="M78 316 L143 316 L166 339 L166 412 L78 412 Z M143 316 L143 339 L166 339"/>
+        <path d="M94 354 L146 354 M94 372 L146 372 M94 390 L129 390"/>
+        <rect x="117" y="438" width="113" height="76" rx="2" fill="white"/>
+        <path d="M117 464 L230 464 M117 489 L230 489 M155 438 L155 514 M192 438 L192 514"/>
+      </g>
+      <text x="160" y="554" text-anchor="middle">Normalize / QC</text>
+      <text x="160" y="590" text-anchor="middle">Provenance</text>
+    </g>
+    <g id="csm" data-role="module" data-width="210">
+      <text x="425" y="244" text-anchor="middle" font-size="31">1 CSM</text>
+      <g id="csm-profile" stroke="#66717a" stroke-width="2" fill="none">
+        <path d="M323 378 L533 378 M323 438 L533 438 M323 483 L533 483"/>
+        <path d="M337 377 L337 328 L366 328 L366 377 M333 329 L370 329"/>
+        <path d="M356 405 C395 399 425 423 465 418 L502 418"/>
+        <polygon points="509,418 496,411 496,425" fill="#66717a" stroke="none"/>
+        <path d="M497 377 L497 347 L514 331 L531 347 L531 377"/>
+      </g>
+      <text x="425" y="525" text-anchor="middle">Source</text>
+      <text x="425" y="559" text-anchor="middle">Pathway</text>
+      <text x="425" y="593" text-anchor="middle">Receptor</text>
+    </g>
+    <g id="twin" data-role="module" data-width="520">
+      <text x="850" y="244" text-anchor="middle" font-size="34" fill="#45656a">2 Digital twin</text>
+      <g id="conceptual-soil-block" stroke="#708388" stroke-width="2" fill="none">
+        <path d="M636 387 L954 387 L1075 304 L756 304 Z" fill="#f3f6f6"/>
+        <path d="M636 387 L954 387 L954 552 L636 552 Z" fill="#fafbfb"/>
+        <path d="M954 387 L1075 304 L1075 469 L954 552 Z" fill="#eef2f3"/>
+        <path d="M636 442 L954 442 L1075 359 M636 497 L954 497 L1075 414"/>
+        <path d="M704 387 L704 552 M768 387 L768 552 M832 387 L832 552 M896 387 L896 552" stroke="#d4dedf"/>
+        <path d="M756 304 L636 387 M820 304 L700 387 M884 304 L764 387 M948 304 L828 387 M1012 304 L892 387" stroke="#d4dedf"/>
+        <path d="M716 332 C750 315 838 314 858 334 C882 343 917 337 934 350 C955 371 898 381 852 372 C814 356 765 378 736 365 C718 357 703 346 716 332 Z" fill="#dbe8e6" stroke="#7b9b96"/>
+        <path d="M715 404 C744 393 799 397 819 416 C848 426 866 415 885 435 C900 460 867 486 841 481 C804 464 778 481 748 465 C719 446 733 426 715 404 Z" fill="#e5eeec" stroke="#91aaa5"/>
+      </g>
+      <text x="850" y="600" text-anchor="middle">Geometry / initial fields / support</text>
+      <text x="850" y="638" text-anchor="middle" fill="#66717a">Conceptual illustration / not to scale</text>
+    </g>
+    <g id="rtm" data-role="module" data-width="210">
+      <text x="1275" y="244" text-anchor="middle" font-size="31">3 RTM</text>
+      <g id="rtm-time-states" stroke="#66717a" stroke-width="2" fill="none">
+        <rect x="1202" y="311" width="93" height="47"/>
+        <path d="M1233 311 L1233 358 M1264 311 L1264 358 M1202 334 L1295 334"/>
+        <rect x="1202" y="394" width="93" height="47"/>
+        <path d="M1233 394 L1233 441 M1264 394 L1264 441 M1202 417 L1295 417"/>
+        <path d="M1248 365 L1248 382"/>
+        <polygon points="1248,388 1242,378 1254,378" fill="#66717a" stroke="none"/>
+      </g>
+      <text x="1317" y="343">t₀</text>
+      <text x="1317" y="426">t₁</text>
+      <text x="1275" y="480" text-anchor="middle">Time evolution</text>
+      <text x="1275" y="675" text-anchor="middle">Mass checks</text>
+    </g>
+    <g id="decision" data-role="module" data-width="300">
+      <text x="1590" y="244" text-anchor="middle" font-size="31">4 Decision</text>
+      <text x="1590" y="279" text-anchor="middle" fill="#66717a">MOPSO</text>
+      <g id="decision-axes" data-state="empty-placeholder" stroke="#66717a" stroke-width="2" fill="none">
+        <path d="M1508 432 L1680 471 M1508 432 L1580 370 M1508 432 L1508 329"/>
+        <polygon points="1687,473 1675,463 1671,477" fill="#66717a" stroke="none"/>
+        <polygon points="1586,365 1570,369 1580,380" fill="#66717a" stroke="none"/>
+        <polygon points="1508,322 1501,335 1515,335" fill="#66717a" stroke="none"/>
+        <text x="1649" y="508" fill="#303840" stroke="none">TIME</text>
+        <text x="1590" y="366" fill="#303840" stroke="none">COST</text>
+        <text x="1452" y="314" fill="#303840" stroke="none">FLUX</text>
+      </g>
+      <text x="1590" y="653" text-anchor="middle">CONC → color</text>
+      <text x="1590" y="689" text-anchor="middle" fill="#66717a">No candidate points</text>
+    </g>
+    <g id="etl-to-csm" data-source="etl" data-target="csm" stroke="#56616a" stroke-width="2" fill="none">
+      <path d="M260 207 L313 207"/>
+      <polygon points="321,207 308,200 308,214" fill="#56616a" stroke="none"/>
+    </g>
+    <g id="csm-to-twin" data-source="csm" data-target="twin" data-status="method-guidance" stroke="#8b949b" stroke-width="2" stroke-dasharray="8 6" fill="none">
+      <path d="M530 207 L583 207"/>
+      <polygon points="591,207 578,200 578,214" fill="#8b949b" stroke="none"/>
+    </g>
+    <g id="twin-to-rtm" data-source="twin" data-target="rtm" stroke="#56616a" stroke-width="2" fill="none">
+      <path d="M1110 207 L1163 207"/>
+      <polygon points="1171,207 1158,200 1158,214" fill="#56616a" stroke="none"/>
+    </g>
+    <g id="rtm-to-decision" data-source="rtm" data-target="decision" stroke="#56616a" stroke-width="2" fill="none">
+      <path d="M1305 523 L1579 523"/>
+      <polygon points="1587,523 1574,516 1574,530" fill="#56616a" stroke="none"/>
+      <text x="1445" y="559" text-anchor="middle" fill="#303840" stroke="none">Model response</text>
+    </g>
+    <g id="decision-to-rtm" data-source="decision" data-target="rtm" stroke="#56616a" stroke-width="2" fill="none">
+      <path d="M1579 582 L1305 582"/>
+      <polygon points="1297,582 1310,575 1310,589" fill="#56616a" stroke="none"/>
+      <text x="1445" y="618" text-anchor="middle" fill="#303840" stroke="none">Candidate request</text>
+    </g>
+    <g id="decision-output" data-role="output" data-source="decision" data-target="output">
+      <path d="M1740 699 L1740 714 L1694 714" stroke="#56616a" stroke-width="2" fill="none"/>
+      <polygon points="1686,714 1699,707 1699,721" fill="#56616a"/>
+      <text x="1442" y="726" text-anchor="middle">Candidate schemes / gate status</text>
+    </g>
+    <g id="shared-resources" data-role="resources">
+      <path d="M60 755 L1740 755" stroke="#ccd4d8" stroke-width="2"/>
+      <text x="60" y="790" fill="#66717a">Shared data / tools: site data · parameters · remediation literature · RTM / MOPSO</text>
+    </g>
+    <text id="draft-label" x="60" y="685" fill="#66717a">STRUCTURE DRAFT</text>
+    <text id="guidance-key" x="60" y="722" fill="#66717a">Dashed: method guidance / user revision</text>
+  </g>
+</svg>

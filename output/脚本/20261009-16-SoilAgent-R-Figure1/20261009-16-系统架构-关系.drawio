@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" version="24.7.17">
+  <diagram id="soilagent-structure" name="Structure draft">
+    <mxGraphModel dx="1800" dy="820" grid="1" gridSize="10" page="1" pageWidth="1800" pageHeight="820">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="input" value="Research goal / site information" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#66717a;fontSize=24;" vertex="1" parent="1"><mxGeometry x="60" y="90" width="460" height="60" as="geometry"/></mxCell>
+        <mxCell id="etl" value="0 Auto-ETL" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#66717a;fontSize=24;" vertex="1" parent="1"><mxGeometry x="60" y="240" width="200" height="200" as="geometry"/></mxCell>
+        <mxCell id="csm" value="1 CSM" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#66717a;fontSize=24;" vertex="1" parent="1"><mxGeometry x="320" y="240" width="210" height="200" as="geometry"/></mxCell>
+        <mxCell id="twin" value="2 Digital twin&#xa;Conceptual illustration / not to scale" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#f3f6f6;strokeColor=#708388;fontSize=24;" vertex="1" parent="1"><mxGeometry x="590" y="240" width="520" height="250" as="geometry"/></mxCell>
+        <mxCell id="rtm" value="3 RTM" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#66717a;fontSize=24;" vertex="1" parent="1"><mxGeometry x="1170" y="240" width="210" height="200" as="geometry"/></mxCell>
+        <mxCell id="decision" value="4 Decision / MOPSO&#xa;Empty axes / no candidate points" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#66717a;fontSize=24;" vertex="1" parent="1"><mxGeometry x="1440" y="240" width="300" height="200" as="geometry"/></mxCell>
+        <mxCell id="output" value="Candidate schemes / gate status" style="rounded=0;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#66717a;fontSize=24;" vertex="1" parent="1"><mxGeometry x="1370" y="620" width="370" height="60" as="geometry"/></mxCell>
+        <mxCell id="input-etl" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=0;" edge="1" parent="1" source="input" target="etl"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="etl-csm" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=0;" edge="1" parent="1" source="etl" target="csm"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="csm-twin" value="Method guidance, not an automated interface" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;dashed=1;html=0;fontSize=18;" edge="1" parent="1" source="csm" target="twin"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="twin-rtm" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=0;" edge="1" parent="1" source="twin" target="rtm"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="rtm-decision" value="Model response" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=0;exitY=0.25;entryY=0.25;fontSize=18;" edge="1" parent="1" source="rtm" target="decision"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="decision-rtm" value="Candidate request" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=0;exitY=0.75;entryY=0.75;fontSize=18;" edge="1" parent="1" source="decision" target="rtm"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="decision-output" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=0;" edge="1" parent="1" source="decision" target="output"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="manual-feedback" value="User revises goals (manual)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;dashed=1;html=0;fontSize=18;" edge="1" parent="1" source="decision" target="input"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1670" y="40"/><mxPoint x="290" y="40"/></Array></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
