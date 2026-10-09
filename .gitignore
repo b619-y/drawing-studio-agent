@@ -31,3 +31,18 @@ third_party/
 .agents/skills/plot-from-image/
 .agents/skills/originals/
 .agents/skills/nature-figure/assets/figures4papers/
+
+# Issue #2：仅公开本轮原创概念草图与审阅依据；原始科学数据仍忽略。
+!output/图/20261009-16-SoilAgent-R-Figure1/
+!output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg
+!output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.pdf
+!output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.png
+!output/脚本/20261009-16-SoilAgent-R-Figure1/
+!output/脚本/20261009-16-SoilAgent-R-Figure1/20261009-16-导出与QA.py
+!output/脚本/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-关系.drawio
+!output/脚本/20261009-16-SoilAgent-R-Figure1/20261009-16-绘图依赖.txt
+!output/表/20261009-16-SoilAgent-R-Figure1/
+!output/表/20261009-16-SoilAgent-R-Figure1/20261009-16-元素与科学依据.md
+!output/报告/20261009-16-SoilAgent-R-Figure1/
+!output/报告/20261009-16-SoilAgent-R-Figure1/README.md
+!output/报告/20261009-16-SoilAgent-R-Figure1/20261009-16-结构草图-QA.json

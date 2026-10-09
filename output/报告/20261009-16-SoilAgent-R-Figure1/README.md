@@ -1,0 +1,126 @@
+# SoilAgent-R Figure 1：第一阶段结构审阅
+
+任务：[Issue #2](https://github.com/b619-y/drawing-studio-agent/issues/2)。2026-10-09用户认可总体结构，并要求改为yyc字体、安装真正Arial及精简文字。Twin下方已改为8个参数场符号、RTM下方只保留控制体库存守恒式；沿用模型标题与CONC轴。四个智能体职责细框保持用户选择的分组，场地认知合并负责Auto-ETL与CSM；工具阶段编号保持在上框，下方五个标题只保留模型名及已拉开的上下标题间距。最新仅将MOPSO标题下的空坐标组整体下移3 mm，缓解拥挤。模型中的相平衡关系不变。仍为待审结构草图，不是正式投稿图，也不关闭Issue。本轮不自动展开真实数据制图。
+
+## 本轮设计
+
+五个工具的主线只出现一次：Auto-ETL → CSM ⇢ Digital twin → RTM ↔ MOPSO，分别对应工具阶段0、1、2、3、4。图面阶段编号仅放在上方职责框，不在下方模型名重复。Twin占主要视觉宽度，以概念分层块体作为唯一主要焦点；其余是白底线稿。CSM→Twin是方法依据而非自动接口，用虚线表达。RTM与MOPSO的双向箭头分别表示候选请求与模型响应。
+
+Twin没有真实尺度、井位或浓度色标，概念/非等比例说明移至caption和SVG描述。Decision保留CONC、COST、FLUX空三维坐标，不画随机点、伪造前沿或最优标记；TIME仍是第四优化目标，但不在这份空坐标示意中显示，不新增颜色映射。顶部虚线只表示用户重新设目标；底部资源条及分隔横线按最新用户要求删除，数据底座的实际职责不变。第5层不在图中。删除画面提示不意味着科学状态升级。
+
+草图当前180 mm整宽、63 mm高，主标签至少7 pt；通用两栏整宽草图，不宣称符合某个期刊最新投稿规范。
+
+## 四个智能体与五个工具（用户选择）
+
+沿用用户指定的职责分组，仅在五个工具标题上方保留四个细框，不替换主体为大卡片。前轮已将工具阶段编号移入上框，本轮保持：
+
+| 上方细框标签 | 智能体职责 | 下方模型名及工具阶段 |
+|---|---|---|
+| 0–1 Site cognition agent | 场地认知 | Auto-ETL（阶段0）+ CSM（阶段1） |
+| 2 Digital twin agent | 数字孪生 | Digital twin（阶段2） |
+| 3 Prediction agent | 效果预测 | RTM（阶段3） |
+| 4 Decision agent | 方案决策 | MOPSO（阶段4） |
+
+场地认知细框跨Auto-ETL与CSM两个标题，其余细框分别对应一个工具标题。0–4编号属于工具阶段，不把四个细框解释为五个智能体；下方Auto-ETL / CSM / Digital twin / RTM / MOPSO均不重复编号。技术证据不单列智能体。四框表示用户选择的职责归属，不构成四个自治runtime已实现或已部署的证明；现有工具能力、箭头语义与人工重新设目标的边界保持。八参数、单一质量守恒式、空坐标及Draft/No-Go状态均不因编号位置变化而升级。
+
+## yyc字体修订
+
+按EasyPlot保存的yyc字体规则，使用真正**Arial Bold**；`scansci-svg`仍为矢量制作主责，EasyPlot仅提供字体规范，不重算科学数据、不更改几何、配色、箭头或轴语义。
+
+- 已安装Arial Regular、Bold、Italic、Bold Italic，仅安装到当前用户的字体目录，不修改系统字体或科研环境，不使用替代字体。
+- 来源：[微软Core fonts原始Arial安装包](https://sourceforge.net/projects/corefonts/files/the%20fonts/final/arial32.exe/download)。包SHA256：`85297a4d146e9c87ac6f74822734bdee5f4b2a722d7eaa584b7f2cbf76f478f6`；与Ubuntu `ttf-mscorefonts-installer 3.8ubuntu2` 的原包记录一致，四个TTF的SHA256也逐一与该包的安装脚本记录对照一致。
+- 实际Bold文件为`Arialbd.TTF`，Version 2.82，SHA256 `4044aa6b5bebbc36980206b45b0aaaaa5681552a48bcadb41746d5d1d71fd7b4`。字体文件及原安装包只在本机保存，不进入Git；[原始许可](https://corefonts.sourceforge.net/eula.htm)一并留存，PDF仅嵌入正文需要的字体子集。
+- 此版本不含Unicode下标数字U+2080/U+2081，所以将`t₀`、`t₁`用原生可编辑`tspan`的数字与基线偏移实现；科学含义及主体位置不变，没有改用其他字体补字。
+- 导出前检查真正Arial Bold及所有可见字符，导出后核对PDF字体为`Arial-BoldMT`。若缺Arial或发生字体回退，检查会失败，不静默生成替代版。
+- 原DejaVu版保存在上一提交`15b1316`，可以通过Git比较和恢复，不另公开字体二进制。
+
+## 3、4部分文字整理
+
+前轮按`scansci-svg`局部编辑规范整理右侧；最新一轮统一全图版式，仍保留Arial Bold、配色、模型符号、空坐标语义及箭头方向：
+
+- RTM的原`Time evolution`、`Mass checks`已替换为公式；按最新要求图面只保留质量平衡式，相平衡关系留在模型及方法说明。Decision保留空坐标，`Color: CONC`已删除。
+- 两条交互箭头由下方带移到RTM与MOPSO的栏间空隙：`Outputs`表示RTM模型响应，`Plans`表示MOPSO候选请求，方向不变。
+- `Candidate schemes`归入Decision下方；门控状态说明放在caption/依据表，不挤在图面。
+- 空坐标状态未改变，无候选点声明保留于SVG描述、caption及文档；没有因删减画面文字而增加虚构数据。
+- 最终PDF六个右侧独立标签（含三轴标签）各出现一次；单个质量平衡式另作包围盒检查，与标签无碰撞。仍需目视判断箭头、轴及图形间的整体关系。
+
+## 模型标题与轴标签精简（当前版）
+
+此前按用户意见撤回`b8efe86`的英文过程标题及双层主/副标题，恢复单行模型名。前轮进一步将阶段编号从五个模型标题移到上方职责框，下方仅写`Auto-ETL`、`CSM`、`Digital twin`、`RTM`、`MOPSO`，不再重复0–4；本轮不改这些标题。用户输入的“DG2 Twin”“MOPS O”仍按本图已有模型名称规范为`Digital twin`、`MOPSO`。
+
+继续按`scansci-svg`局部编辑规范保留原生可编辑文字；图形、箭头、配色、Arial Bold及模型能力不变。删除`Color: CONC`，在原TIME坐标标签的位置放`CONC`。这只是CONC/COST/FLUX三维空占位投影的展示修改，不删减四目标计算中的TIME。
+
+删除画面上的`STRUCTURE DRAFT`、虚线解释及`Conceptual illustration / not to scale`。概念、非等比例、非实测、无真实候选点、待审状态及虚线含义留在caption/README/SVG描述中；关系XML仍仅记录实施模块关系，不作为新版排版复刻。
+
+此前按用户截图删除`shared-resources`整组（底部`Shared data / tools`文字与分隔横线）；最新一轮进一步收紧画幅，不删除实际共用数据/工具，也不重算科学结果。
+
+## 八参数与RTM公式（本轮）
+
+Twin下方列`K、K_d、α、λ、λ_active、R、v、D`，来自`2-数字孪生/skill/scripts/build_twin.py:143–146,351–425,707–714`登记的七个常规参数场加一个扩展场。只列名称，不抄历史清单里的数值。它们不是八个独立实测标量：`R/v/D`属于派生场，`v/D`可标为deferred；`λ_active`是情景增强场，不等同于所有路线的恒定反应速率，也不宣称已批准替换正式RTM输入。
+
+RTM图面下方只显示当前direct RTM的局部守恒关系：
+
+\[
+\frac{dM}{dt}=-\sum_f F_f-r.
+\]
+
+`M`为控制体总Cr(VI)库存（mg），`F_f`为有符号向外面质量率（mg/d，含对流与弥散），`r`为净反应质量率（mg/d）。依据为`3-rtm模拟/skill/scripts/rtm_mopso/mass_conservative_solver.py:215–226,547–634,815–875`。该图展示半离散守恒关系，不替代实际算子分裂、正性处理及独立质量账本；`r`由实际路线、有限容量和作用窗口决定，未将工程反应压成持续恒定`λ_active`。
+
+方法说明仍保留模型中的线性相平衡关系`C_s=K_d C_w`：`C_s`只指吸附相（mg/kg），不是土壤总浓度，`C_w`为水相（mg/L），`K_d`用L/kg。该关系仅从图面删除，不修改科学模型中的相分配。
+
+质量平衡式保留原生可编辑文字与竖分数，参数和时间下标采用`tspan`；按真正Arial Bold字宽确定起点，不对每个下标片段单独居中。无科学代码或数据改写。
+
+## 留白、对齐与公式排版（最新修订）
+
+此前按`scansci-svg`重排同一SVG：画幅由180×82 mm收紧为180×63 mm，字体物理尺寸不缩小。前轮上方细框保持`y=120/h45`，下方五个模型标题共用基线从`y=200`下移到`y=220`，三条标题间连接箭头同步下移20，稍微拉开框内文字与模型名的间距；最终PDF中框底到模型名实际字形间距为2.42–2.69 mm。本轮保留上述位置与间距。ETL、CSM与Twin下方说明保持`y=550/590`两行，RTM公式区下沿及候选输出对齐其他说明末行。CSM的Source与Pathway合为一行，三个概念均保留。
+
+RTM导数保留原生文字和分数横线，不栅格化或描成字形轮廓；最新图面仅保留一个质量平衡式，整体在RTM栏`x=1275`居中，公式区下沿与其他说明对齐。最终PDF检查公式与标签包围盒无碰撞及整体居中。Outputs/Plans位于栏间，Candidate schemes直接归在MOPSO下方，避免右侧尾部拉高全图。关联箭头的来源、目标及方向不变。
+
+此前删除图面的相平衡关系并居中保留守恒式、增加四个职责细框，随后迁移编号并拉开标题间距；相关输入、人工反馈及标题连接箭头的来源、目标和语义未变。本轮仅对`decision-axes`整组加`translate(0 30)`，将空坐标轴、轴箭头及CONC/COST/FLUX三个标签整体下移3 mm，让坐标图离MOPSO标题稍远；最终PDF中MOPSO标题底到FLUX标签顶间距为3.19 mm。模型标题、Outputs/Plans交互箭头、Candidate schemes输出及其他主体、公式与八参数全部不动；空坐标没有新增点、前沿或颜色映射。没有新增参数、修改科学公式含义或改变科学状态。本轮最终PNG已由绘制者目视确认无明显遮挡或裁切；未做新的独立科学或版式目视复核。
+
+## 成果与来源
+
+- [科学依据表](../../表/20261009-16-SoilAgent-R-Figure1/20261009-16-元素与科学依据.md)。
+- 原生可编辑[SVG](../../图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg)、矢量[PDF](../../图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.pdf)与[PNG预览](../../图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.png)，均为第一阶段草图。
+- 关系结构XML与导出/QA脚本：`../../脚本/20261009-16-SoilAgent-R-Figure1/`。
+- 科学来源：研究仓库main `e2e1f2b25ae9746ab3632fc118f946bf62582546`；治理文档HEAD `c287d03`。绘图仓库起点 `4700d89dd3a2c5498b5ab213ee968670e35b5c3c`。
+- 仓库公开，只提交本次原创概念图、源码、来源指针和QA；不上传私有代码正文、调查表、三维场或候选数据。
+
+## 工具与QA边界
+
+按 `SKILL_ROUTING.md`，主责为本机 `scansci-svg`，本轮使用原生SVG构形。`drawio-skill`在第一阶段仅辅助保留关系XML及结构检查：Linux缺draw.io CLI，**没有执行draw.io图像导出/桌面编辑验证**。目视发现PyMuPDF的SVG转换丢失虚线且替换字体，故改用CairoSVG导出矢量PDF，PyMuPDF仅做PDF检查及PNG重渲染。只在绘图clone建立忽略的`.venv`；科学仓库及其运行环境未改动。本轮字体安装不调用系统级安装器；cabextract及其依赖只解压在临时工具目录。
+
+自动检查覆盖SVG唯一ID、五个工具模块及四个职责细框、禁止位图/随机点及未请求的职责组、箭头拓扑、原生文字、PDF物理尺寸/无图像对象、字体及虚线保留、重新渲染及源码SHA。实际回执见[QA JSON](20261009-16-结构草图-QA.json)。
+
+- 本轮23项回归测试通过，最终PDF技术QA全部通过，`scansci check_svg`实际通过（0 errors）。最终PDF中MOPSO标题底到FLUX标签顶间距为3.19 mm。关系XML的既有drawio严格检查0错误、0警告仍对应原文件，不作为新版排版的桌面导出证明。
+- 本轮源码范围核验通过：SVG diff仅`decision-axes`新增`transform="translate(0 30)"`一行，完全没有其他SVG变更。模型标题、Outputs/Plans交互箭头、Candidate schemes输出与其他主体、公式及八参数保持，不沿用前轮标题与连接箭头的修改范围作本轮结论。
+- 本轮PDF保持180×63 mm、原生矢量、无图像对象，仅使用真正`Arial-BoldMT`。主体文字最小7.37 pt、原生下标6.24 pt；字体子集嵌入，两条虚线保留，所有可见字符都有Arial字形。
+- 最终PNG由最终PDF重渲染，本轮绘制者已目视确认坐标组下移后的图面无明显遮挡或裁切；不称本轮独立版式复核已完成。
+- 未执行：draw.io桌面导出/交互编辑、特定期刊投稿规格检查、实体打印审阅；正式科学验收仍待进行。自动检查不能代替这些环节。
+
+### 复现
+
+绘图依赖版本在同主题脚本目录的`20261009-16-绘图依赖.txt`，Linux系统还需可用的Cairo库、Fontconfig及真正Arial Bold字体。用户安装字体后刷新其字体缓存；脚本不自动下载或分发字体。SVG是可编辑源文件，修改后重新导出并目视复核。
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r output/脚本/20261009-16-SoilAgent-R-Figure1/20261009-16-绘图依赖.txt
+.venv/bin/python output/脚本/20261009-16-SoilAgent-R-Figure1/20261009-16-导出与QA.py
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+scansci与drawio检查器由执行环境提供，不拷贝第三方脚本进此PR；上述本仓库测试和导出脚本不依赖私有研究仓库。
+
+## 后续待确认与输入
+
+1. 总体结构已获用户“还行”反馈，保留四个智能体负责五个工具的分组、编号入框及已拉开的标题间距；本轮仅将MOPSO空坐标组下移3 mm，后续进一步排版或数据制图需沿用已认可结构与职责映射。
+2. 结构批准后，选择可公开的已核验Twin几何/场素材和真实四目标候选数据，锁定运行来源SHA、门控状态、单位及使用授权。本阶段没有导入这些素材，不把“未导入”说成项目没有数据。
+3. 若保持概念Twin，可继续精绘但保留非等比例声明；真实3D Pareto须有可核验输入，不能用随机数补齐。提交前再检查科学语义、版面、字体与最终PDF。
+
+## English caption（结构草图）
+
+**Figure 1. Evidence-grounded architecture of SoilAgent-R (structure draft pending review).** Site information is organized through Auto-ETL, a conceptual site model (CSM), three-dimensional digital-twin construction, reactive transport modelling (RTM), and multi-objective decision support (MOPSO). The CSM-to-twin connection represents methodological guidance rather than a claimed automated file interface. The Outputs and Plans links denote RTM model responses and MOPSO candidate requests, respectively. The four objectives are concentration (CONC), cumulative transport (FLUX), cost (COST), and engineering duration (TIME). The empty CONC/COST/FLUX axes are a layout placeholder without candidate points; TIME remains a fourth optimization objective but is not displayed in this placeholder. No objective-to-color mapping is shown. Candidate schemes remain screening-level and subject to formal evaluation gates, not validated engineering optima. The conceptual block is not to scale and does not encode measured concentrations. Dashed feedback denotes user revision of goals, not an autonomous real-time control loop. New reconstruction candidates are currently No-Go for replacing the retained RTM input.
+
+The four thin frames denote user-selected agent responsibility groups: “0–1 Site cognition agent” covers Auto-ETL and CSM, “2 Digital twin agent” covers Digital twin, “3 Prediction agent” covers RTM, and “4 Decision agent” covers MOPSO. The numbers identify tool stages and appear only in the upper frames, not in the model titles below. This groups five tool modules under four agents without claiming implementation or deployment of four autonomous runtimes. Technical evidence is not shown as a separate agent group.
+
+The eight symbols below the twin identify documented parameter-field groups, including derived and scenario-dependent fields, not eight independently measured quantities. The single displayed RTM equation denotes control-volume mass balance: M is total cell Cr(VI) mass, F is signed outward face mass rate, and r is net reaction mass rate. Equilibrium partitioning remains part of the underlying model. Engineering reaction rates retain their applicable capacity and time-window constraints.

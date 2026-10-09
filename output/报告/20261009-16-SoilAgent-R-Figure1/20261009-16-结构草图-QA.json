@@ -1,0 +1,256 @@
+{
+  "stage": "structure_draft_spaced_mopso_axes",
+  "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
+  "source_sha256": "919719471ce7494b354b9040f146a6593a52e5363896432b9ce43f2933d6d5e9",
+  "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
+  "typography": {
+    "style": "yyc_typography_only",
+    "requested_family": "Arial",
+    "requested_face": "Bold",
+    "resolved_family": "Arial",
+    "resolved_face": "Bold",
+    "font_filename": "Arialbd.TTF",
+    "font_sha256": "4044aa6b5bebbc36980206b45b0aaaaa5681552a48bcadb41746d5d1d71fd7b4",
+    "font_version": "Version 2.82",
+    "font_embedding_fstype": 0,
+    "missing_visible_glyphs": []
+  },
+  "checks": {
+    "svg_unique_ids": true,
+    "svg_no_raster_or_filter": true,
+    "pdf_single_page": true,
+    "pdf_no_image_objects": true,
+    "pdf_text_present": true,
+    "pdf_text_inside_page": true,
+    "pdf_main_labels_minimum_font_7pt": true,
+    "pdf_only_native_subscripts_below_7pt": true,
+    "pdf_arial_bold_no_fallback": true,
+    "pdf_dashed_guidance_and_feedback_preserved": true,
+    "pdf_right_labels_present_once": true,
+    "pdf_right_labels_no_text_collision": true,
+    "pdf_model_headers_present_once": true,
+    "pdf_model_headers_no_text_collision": true,
+    "pdf_mopso_title_axes_gap_at_least_2mm": true,
+    "svg_four_agent_scopes_cover_five_modules": true,
+    "pdf_agent_labels_fit_header_frames": true,
+    "pdf_agent_frames_model_labels_spacing": true,
+    "pdf_agent_headers_input_feedback_no_text_collision": true,
+    "pdf_removed_process_and_figure_notes_absent": true,
+    "svg_shared_footer_and_divider_absent": true,
+    "pdf_shared_footer_absent": true,
+    "pdf_rtm_balance_present": true,
+    "pdf_rtm_balance_no_label_collision": true,
+    "pdf_rtm_only_one_equation_equals_sign": true,
+    "pdf_rtm_balance_centered_under_header": true,
+    "svg_partition_equation_removed": true,
+    "svg_five_title_baselines_aligned": true,
+    "svg_five_annotation_final_baselines_aligned": true,
+    "svg_compact_bottom_margin": true,
+    "pdf_conc_axis_replaces_time": true,
+    "pdf_width_180mm": true,
+    "pdf_height_63mm": true
+  },
+  "pdf_width_mm": 179.99999491373697,
+  "pdf_height_mm": 62.999998219807935,
+  "pdf_minimum_font_pt": 6.236219882965088,
+  "pdf_main_label_minimum_font_pt": 7.370079040527344,
+  "pdf_text_spans": 36,
+  "pdf_vector_drawings": 49,
+  "pdf_fonts": [
+    "Arial-BoldMT"
+  ],
+  "pdf_dashed_paths": 2,
+  "pdf_image_objects": 0,
+  "clipped_text": [],
+  "right_label_boxes_pt": {
+    "CONC": [
+      [
+        477.63671875,
+        141.583984375,
+        499.3268737792969,
+        149.80899047851562
+      ]
+    ],
+    "COST": [
+      [
+        465.44921875,
+        94.810546875,
+        485.9012145996094,
+        103.03555297851562
+      ]
+    ],
+    "FLUX": [
+      [
+        428.06640625,
+        73.267578125,
+        447.28759765625,
+        81.49258422851562
+      ]
+    ],
+    "Outputs": [
+      [
+        391.81640625,
+        86.306640625,
+        420.0364685058594,
+        94.53164672851562
+      ]
+    ],
+    "Plans": [
+      [
+        396.0,
+        109.267578125,
+        415.64129638671875,
+        117.49258422851562
+      ]
+    ],
+    "Candidate schemes": [
+      [
+        430.2734375,
+        160.572265625,
+        499.4491271972656,
+        168.79727172851562
+      ]
+    ]
+  },
+  "right_label_collisions": [],
+  "model_header_boxes_pt": {
+    "Auto-ETL": [
+      [
+        25.72265625,
+        54.410682678222656,
+        65.21324157714844,
+        64.21742248535156
+      ]
+    ],
+    "CSM": [
+      [
+        110.8125,
+        54.410682678222656,
+        130.32931518554688,
+        64.21742248535156
+      ]
+    ],
+    "Digital twin": [
+      [
+        215.22265625,
+        53.641075134277344,
+        266.56317138671875,
+        64.39685821533203
+      ]
+    ],
+    "RTM": [
+      [
+        351.890625,
+        54.410682678222656,
+        370.9153747558594,
+        64.21742248535156
+      ]
+    ],
+    "MOPSO": [
+      [
+        448.390625,
+        54.410682678222656,
+        481.0710144042969,
+        64.21742248535156
+      ]
+    ]
+  },
+  "model_header_collisions": [],
+  "mopso_title_axes_gap_mm": 3.1926937950981986,
+  "agent_responsibility_mapping": {
+    "site-agent": "etl,csm",
+    "twin-agent": "twin",
+    "prediction-agent": "rtm",
+    "decision-agent": "decision"
+  },
+  "agent_step_indices": {
+    "site-agent": "0,1",
+    "twin-agent": "2",
+    "prediction-agent": "3",
+    "decision-agent": "4"
+  },
+  "agent_frame_to_model_label_gaps_pt": {
+    "etl": 7.639030456542969,
+    "csm": 7.639030456542969,
+    "twin": 6.869422912597656,
+    "rtm": 7.639030456542969,
+    "decision": 7.639030456542969
+  },
+  "agent_label_boxes_pt": {
+    "0–1 Site cognition agent": [
+      [
+        41.8359375,
+        36.134765625,
+        126.52552795410156,
+        44.35977554321289
+      ]
+    ],
+    "2 Digital twin agent": [
+      [
+        207.3203125,
+        36.134765625,
+        274.4175720214844,
+        44.35977554321289
+      ]
+    ],
+    "3 Prediction agent": [
+      [
+        329.37890625,
+        36.134765625,
+        393.2112731933594,
+        44.35977554321289
+      ]
+    ],
+    "4 Decision agent": [
+      [
+        435.57421875,
+        36.134765625,
+        494.0927429199219,
+        44.35977554321289
+      ]
+    ]
+  },
+  "top_label_collisions": [],
+  "formula_boxes_pt": {
+    "balance": [
+      337.21484375,
+      150.369140625,
+      385.2942199707031,
+      168.79727172851562
+    ]
+  },
+  "formula_label_collisions": [],
+  "rtm_equal_sign_boxes_pt": [
+    [
+      352.0625,
+      156.037109375,
+      356.3592529296875,
+      164.26211547851562
+    ]
+  ],
+  "partition_equation_displayed": false,
+  "module_title_baselines_svg": [
+    "220",
+    "220",
+    "220",
+    "220",
+    "220"
+  ],
+  "module_annotation_final_baselines_svg": [
+    "590",
+    "590",
+    "590",
+    "590",
+    "590"
+  ],
+  "png_size_pixels": [
+    2041,
+    715
+  ],
+  "not_checked_by_this_script": [
+    "visual_layout",
+    "scientific_acceptance",
+    "drawio_desktop_export",
+    "journal_specific_submission_rules"
+  ]
+}
