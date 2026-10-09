@@ -65,7 +65,7 @@ def export(repo: Path) -> dict:
     converted_bytes = cairosvg.svg2pdf(url=str(source))
     with pymupdf.open("pdf", converted_bytes) as document:
         page = document[0]
-        document.set_metadata({"title": "SoilAgent-R Figure 1", "author": "Drawing studio", "subject": "Conceptual structure draft pending review; model titles and empty CONC/COST/FLUX axes; not publication final"})
+        document.set_metadata({"title": "SoilAgent-R Figure 1", "author": "Drawing studio", "subject": "Four agent responsibility groups over five tool/model modules; conceptual draft pending review; not verified independent agent runtimes or publication final"})
         document.save(figures / f"{STEM}.pdf", garbage=4, deflate=True)
         pixmap = page.get_pixmap(matrix=pymupdf.Matrix(4, 4), alpha=False)
         pixmap.save(figures / f"{STEM}.png")
@@ -103,6 +103,28 @@ def export(repo: Path) -> dict:
             for second in header_labels[index + 1:]:
                 if any((a & b).get_area() > 0.5 for a in header_rects[first] for b in header_rects[second]):
                     header_collisions.append([first, second])
+        agent_groups = [n for n in root.iter() if n.get("data-role") == "agent-scope"]
+        agent_mappings = {n.get("id"): n.get("data-modules") for n in agent_groups}
+        expected_agent_mappings = {"site-agent": "etl,csm", "twin-agent": "twin", "prediction-agent": "rtm", "decision-agent": "decision"}
+        agent_rects = {}
+        agent_fit = []
+        for group in agent_groups:
+            label = group.find(NS + "text").text
+            frame = group.find(NS + "rect")
+            x, y, width, height = (float(frame.get(key)) for key in ["x", "y", "width", "height"])
+            frame_rect = svg_band(x, y, x + width, y + height)
+            boxes = page.search_for(label)
+            agent_rects[label] = boxes
+            agent_fit.append(len(boxes) == 1 and frame_rect.contains(boxes[0]))
+        top_rects = {**agent_rects, **header_rects,
+                     "Research goal / site information": page.search_for("Research goal / site information"),
+                     "User revises goals": page.search_for("User revises goals")}
+        top_collisions = []
+        top_labels = list(top_rects)
+        for index, first in enumerate(top_labels):
+            for second in top_labels[index + 1:]:
+                if any((a & b).get_area() > 0.5 for a in top_rects[first] for b in top_rects[second]):
+                    top_collisions.append([first, second])
         visible_text = " ".join(s["text"] for s in spans)
         removed_labels = ["Conceptualization", "Site reconstruction", "Reaction prediction", "Plan optimization", "Color: CONC", "STRUCTURE DRAFT", "Dashed:", "Conceptual illustration / not to scale", "Geometry / initial fields / support", "Time evolution", "Mass checks"]
         allowed_subscripts = sorted(n.text.strip() for n in root.iter(NS + "tspan") if n.get("dy") == "8")
@@ -141,6 +163,9 @@ def export(repo: Path) -> dict:
             "pdf_right_labels_no_text_collision": not collisions,
             "pdf_model_headers_present_once": header_unique,
             "pdf_model_headers_no_text_collision": not header_collisions,
+            "svg_four_agent_scopes_cover_five_modules": agent_mappings == expected_agent_mappings and len(agent_groups) == 4,
+            "pdf_agent_labels_fit_header_frames": len(agent_fit) == 4 and all(agent_fit),
+            "pdf_agent_headers_input_feedback_no_text_collision": not top_collisions,
             "pdf_removed_process_and_figure_notes_absent": all(label not in visible_text for label in removed_labels),
             "svg_shared_footer_and_divider_absent": "shared-resources" not in ids and not any(n.get("d") == "M60 755 L1740 755" for n in root.iter(NS + "path")),
             "pdf_shared_footer_absent": "Shared data / tools" not in visible_text,
@@ -157,7 +182,7 @@ def export(repo: Path) -> dict:
             "pdf_height_63mm": abs(rect.height * 25.4 / 72 - 63) < 0.01,
         }
         receipt = {
-            "stage": "structure_draft_single_rtm_balance",
+            "stage": "structure_draft_four_agent_scopes_single_rtm_balance",
             "source": source.relative_to(repo).as_posix(),
             "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
             "backend": f"CairoSVG {cairosvg.__version__}; PyMuPDF {pymupdf.VersionBind} for PDF QA/render",
@@ -177,6 +202,9 @@ def export(repo: Path) -> dict:
             "right_label_collisions": collisions,
             "model_header_boxes_pt": {label: [list(box) for box in boxes] for label, boxes in header_rects.items()},
             "model_header_collisions": header_collisions,
+            "agent_responsibility_mapping": agent_mappings,
+            "agent_label_boxes_pt": {label: [list(box) for box in boxes] for label, boxes in agent_rects.items()},
+            "top_label_collisions": top_collisions,
             "formula_boxes_pt": {name: list(box) for name, box in formula_rects.items()},
             "formula_label_collisions": formula_collisions,
             "rtm_equal_sign_boxes_pt": [list(box) for box in equals_rects],

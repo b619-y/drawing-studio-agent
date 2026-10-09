@@ -1,17 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="63mm" viewBox="0 0 1800 630">
   <title>SoilAgent-R: evidence-grounded architecture</title>
-  <desc>Five modules. Structure draft pending review. The digital twin is a conceptual illustration, not to scale and not a measured field. Dashed links denote methodological guidance or user revision. Decision axes contain no candidate data. Empty axes show CONC, COST and FLUX; TIME remains a fourth optimization objective, not shown in this placeholder.</desc>
+  <desc>Four user-selected agent responsibility groups cover five tool/model modules: site cognition covers Auto-ETL and CSM; digital twin, prediction and decision cover Digital twin, RTM and MOPSO respectively. The frames express responsibility, not verified independent autonomous runtimes. Structure draft pending review. The digital twin is a conceptual illustration, not to scale and not a measured field. Dashed links denote methodological guidance or user revision. Decision axes contain no candidate data. Empty axes show CONC, COST and FLUX; TIME remains a fourth optimization objective, not shown in this placeholder.</desc>
   <g id="canvas" font-family="Arial" font-weight="700" font-size="26" fill="#303840" stroke-linejoin="round" stroke-linecap="round">
     <rect width="1800" height="630" fill="white"/>
     <g id="research-input" data-role="input">
-      <text x="60" y="111" font-size="30">Research goal / site information</text>
-      <path d="M160 130 L160 154" fill="none" stroke="#56616a" stroke-width="2"/>
-      <polygon points="160,162 153,149 167,149" fill="#56616a"/>
+      <text x="60" y="90" font-size="30">Research goal / site information</text>
+      <path d="M160 107 L160 112" fill="none" stroke="#56616a" stroke-width="2"/>
+      <polygon points="160,120 153,107 167,107" fill="#56616a"/>
     </g>
     <g id="user-feedback" data-source="decision" data-target="research-input" data-status="manual" stroke="#8b949b" stroke-width="2" stroke-dasharray="9 7" fill="none">
-      <path d="M1640 160 L1640 48 L540 48 L540 77"/>
+      <path d="M1740 120 L1740 48 L540 48 L540 77"/>
       <polygon points="540,85 533,72 547,72" fill="#8b949b" stroke="none"/>
       <text x="1100" y="38" text-anchor="middle" fill="#66717a" stroke="none">User revises goals</text>
+    </g>
+    <g id="agent-scopes" data-status="user-selected-responsibility-grouping">
+      <g id="site-agent" data-role="agent-scope" data-modules="etl,csm">
+        <rect x="60" y="120" width="475" height="45" fill="none" stroke="#8b949b" stroke-width="1.5"/>
+        <text id="site-agent-label" x="297.5" y="151" text-anchor="middle">Site cognition agent</text>
+      </g>
+      <g id="twin-agent" data-role="agent-scope" data-modules="twin">
+        <rect x="670" y="120" width="360" height="45" fill="none" stroke="#8b949b" stroke-width="1.5"/>
+        <text id="twin-agent-label" x="850" y="151" text-anchor="middle">Digital twin agent</text>
+      </g>
+      <g id="prediction-agent" data-role="agent-scope" data-modules="rtm">
+        <rect x="1150" y="120" width="250" height="45" fill="none" stroke="#8b949b" stroke-width="1.5"/>
+        <text id="prediction-agent-label" x="1275" y="151" text-anchor="middle">Prediction agent</text>
+      </g>
+      <g id="decision-agent" data-role="agent-scope" data-modules="decision">
+        <rect x="1500" y="120" width="280" height="45" fill="none" stroke="#8b949b" stroke-width="1.5"/>
+        <text id="decision-agent-label" x="1640" y="151" text-anchor="middle">Decision agent</text>
+      </g>
     </g>
     <g id="etl" data-role="module" data-width="200">
       <text id="etl-method-label" data-role="module-title" x="160" y="200" text-anchor="middle" font-size="31">0 Auto-ETL</text>

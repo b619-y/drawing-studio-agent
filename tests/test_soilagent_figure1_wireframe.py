@@ -20,6 +20,33 @@ class WireframeTests(unittest.TestCase):
         modules = [n.get("id") for n in self.root.iter() if n.get("data-role") == "module"]
         self.assertEqual(modules, ["etl", "csm", "twin", "rtm", "decision"])
 
+    def test_four_agent_responsibility_groups(self):
+        groups = [n for n in self.root.iter() if n.get("data-role") == "agent-scope"]
+        self.assertEqual({n.get("id"): n.get("data-modules") for n in groups}, {
+            "site-agent": "etl,csm", "twin-agent": "twin",
+            "prediction-agent": "rtm", "decision-agent": "decision",
+        })
+        covered = [module for n in groups for module in n.get("data-modules").split(",")]
+        self.assertEqual(covered, ["etl", "csm", "twin", "rtm", "decision"])
+        self.assertEqual(self.nodes["agent-scopes"].get("data-status"), "user-selected-responsibility-grouping")
+        for label in ["Site cognition agent", "Digital twin agent", "Prediction agent", "Decision agent"]:
+            self.assertEqual(self.text.count(label), 1)
+        self.assertNotIn("Technical evidence agent", self.text)
+        self.assertIn("not verified independent autonomous runtimes", self.root.find(NS + "desc").text)
+
+    def test_agent_frames_are_lightweight_header_only(self):
+        for node in self.nodes["agent-scopes"]:
+            frame = node.find(NS + "rect")
+            label = node.find(NS + "text")
+            self.assertEqual(frame.get("y"), "120")
+            self.assertEqual(frame.get("height"), "45")
+            self.assertEqual(frame.get("fill"), "none")
+            self.assertLessEqual(float(frame.get("stroke-width")), 2)
+            self.assertEqual(label.get("y"), "151")
+            self.assertAlmostEqual(float(label.get("x")), float(frame.get("x")) + float(frame.get("width")) / 2)
+            self.assertLess(float(frame.get("y")) + float(frame.get("height")), 200)
+            self.assertEqual([n.tag for n in node], [NS + "rect", NS + "text"])
+
     def test_headers_once(self):
         for label in ["0 Auto-ETL", "1 CSM", "2 Digital twin", "3 RTM", "4 MOPSO"]:
             self.assertEqual(self.text.count(label), 1)

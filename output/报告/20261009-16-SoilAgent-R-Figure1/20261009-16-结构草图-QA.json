@@ -1,7 +1,7 @@
 {
-  "stage": "structure_draft_single_rtm_balance",
+  "stage": "structure_draft_four_agent_scopes_single_rtm_balance",
   "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
-  "source_sha256": "b44b371a27fd898eb713f0916d4ea42843a341854b0d50fd4dbe5f93d8e9a782",
+  "source_sha256": "c5a45636c9db3fc51c5cf11dbaede7266bdb559aaa1ee715c2260c28564f0fa4",
   "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
   "typography": {
     "style": "yyc_typography_only",
@@ -30,6 +30,9 @@
     "pdf_right_labels_no_text_collision": true,
     "pdf_model_headers_present_once": true,
     "pdf_model_headers_no_text_collision": true,
+    "svg_four_agent_scopes_cover_five_modules": true,
+    "pdf_agent_labels_fit_header_frames": true,
+    "pdf_agent_headers_input_feedback_no_text_collision": true,
     "pdf_removed_process_and_figure_notes_absent": true,
     "svg_shared_footer_and_divider_absent": true,
     "pdf_shared_footer_absent": true,
@@ -49,8 +52,8 @@
   "pdf_height_mm": 62.999998219807935,
   "pdf_minimum_font_pt": 6.236219882965088,
   "pdf_main_label_minimum_font_pt": 7.370079040527344,
-  "pdf_text_spans": 32,
-  "pdf_vector_drawings": 45,
+  "pdf_text_spans": 36,
+  "pdf_vector_drawings": 49,
   "pdf_fonts": [
     "Arial-BoldMT"
   ],
@@ -151,6 +154,47 @@
     ]
   },
   "model_header_collisions": [],
+  "agent_responsibility_mapping": {
+    "site-agent": "etl,csm",
+    "twin-agent": "twin",
+    "prediction-agent": "rtm",
+    "decision-agent": "decision"
+  },
+  "agent_label_boxes_pt": {
+    "Site cognition agent": [
+      [
+        49.03125,
+        36.134765625,
+        119.38603973388672,
+        44.35977554321289
+      ]
+    ],
+    "Digital twin agent": [
+      [
+        210.21875,
+        36.134765625,
+        271.1693420410156,
+        44.35977554321289
+      ]
+    ],
+    "Prediction agent": [
+      [
+        332.32421875,
+        36.134765625,
+        390.0099182128906,
+        44.35977554321289
+      ]
+    ],
+    "Decision agent": [
+      [
+        438.44921875,
+        36.134765625,
+        490.8284606933594,
+        44.35977554321289
+      ]
+    ]
+  },
+  "top_label_collisions": [],
   "formula_boxes_pt": {
     "balance": [
       337.21484375,
