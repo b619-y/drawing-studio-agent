@@ -1,7 +1,7 @@
 {
-  "stage": "structure_draft_model_heading_and_axis_cleanup",
+  "stage": "structure_draft_eight_fields_and_rtm_equations",
   "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
-  "source_sha256": "1c7297fa6c6e176cf5ac106c2ba8e9a3500898717a2900eb0fe0431fdcbd4454",
+  "source_sha256": "4ac347c100c42ac05c99059ce9eee325705382502bc20a621495524521ced85a",
   "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
   "typography": {
     "style": "yyc_typography_only",
@@ -23,7 +23,7 @@
     "pdf_text_present": true,
     "pdf_text_inside_page": true,
     "pdf_main_labels_minimum_font_7pt": true,
-    "pdf_only_time_subscripts_below_7pt": true,
+    "pdf_only_native_subscripts_below_7pt": true,
     "pdf_arial_bold_no_fallback": true,
     "pdf_dashed_guidance_and_feedback_preserved": true,
     "pdf_right_labels_present_once": true,
@@ -31,6 +31,10 @@
     "pdf_model_headers_present_once": true,
     "pdf_model_headers_no_text_collision": true,
     "pdf_removed_process_and_figure_notes_absent": true,
+    "svg_shared_footer_and_divider_absent": true,
+    "pdf_shared_footer_absent": true,
+    "pdf_rtm_formulas_present": true,
+    "pdf_rtm_formulas_no_label_collision": true,
     "pdf_conc_axis_replaces_time": true,
     "pdf_width_180mm": true,
     "pdf_height_82mm": true
@@ -39,8 +43,8 @@
   "pdf_height_mm": 82.00000127156575,
   "pdf_minimum_font_pt": 6.236219882965088,
   "pdf_main_label_minimum_font_pt": 7.370079040527344,
-  "pdf_text_spans": 26,
-  "pdf_vector_drawings": 45,
+  "pdf_text_spans": 35,
+  "pdf_vector_drawings": 44,
   "pdf_fonts": [
     "Arial-BoldMT"
   ],
@@ -48,22 +52,6 @@
   "pdf_image_objects": 0,
   "clipped_text": [],
   "right_label_boxes_pt": {
-    "Time evolution": [
-      [
-        335.5859375,
-        137.896484375,
-        387.5376892089844,
-        146.12149047851562
-      ]
-    ],
-    "Mass checks": [
-      [
-        338.59375,
-        149.236328125,
-        384.0599060058594,
-        157.46133422851562
-      ]
-    ],
     "CONC": [
       [
         467.43359375,
@@ -157,6 +145,21 @@
     ]
   },
   "model_header_collisions": [],
+  "formula_boxes_pt": {
+    "balance": [
+      334.53515625,
+      137.896484375,
+      387.8503112792969,
+      146.12149047851562
+    ],
+    "partition": [
+      347.46875,
+      152.53199768066406,
+      380.6853942871094,
+      159.4916229248047
+    ]
+  },
+  "formula_label_collisions": [],
   "png_size_pixels": [
     2041,
     930

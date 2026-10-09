@@ -72,6 +72,12 @@ class WireframeTests(unittest.TestCase):
         for retained in ["Structure draft pending review", "conceptual illustration", "not to scale", "not a measured field", "methodological guidance"]:
             self.assertIn(retained, desc)
 
+    def test_shared_resources_footer_removed(self):
+        self.assertNotIn("shared-resources", self.nodes)
+        self.assertNotIn("Shared data / tools", self.text)
+        self.assertFalse(any(n.get("data-role") == "resources" for n in self.root.iter()))
+        self.assertFalse(any(n.get("d") == "M60 755 L1740 755" for n in self.root.iter(NS + "path")))
+
     def test_csm_method_guidance(self):
         node = self.nodes["csm-to-twin"]
         self.assertEqual(node.get("data-status"), "method-guidance")
@@ -106,18 +112,28 @@ class WireframeTests(unittest.TestCase):
             self.assertGreater(float(subscript.get("dy")), 0)
 
     def test_right_side_text_hierarchy(self):
-        time = self.nodes["rtm-summary-time"]
-        mass = self.nodes["rtm-summary-mass"]
+        balance = self.nodes["rtm-balance-equation"]
+        partition = self.nodes["rtm-partition-equation"]
         output = self.nodes["model-response-label"]
         request = self.nodes["candidate-request-label"]
         scheme = self.nodes["candidate-schemes-label"]
-        self.assertEqual(time.get("x"), mass.get("x"))
-        self.assertLess(float(mass.get("y")), float(output.get("y")))
+        self.assertEqual(balance.get("x"), partition.get("data-center-x"))
+        self.assertLess(float(balance.get("y")), float(partition.get("y")))
+        self.assertLess(float(partition.get("y")), float(output.get("y")))
         self.assertLess(float(output.get("y")), float(request.get("y")))
         self.assertLess(float(request.get("y")), float(scheme.get("y")))
         self.assertEqual(self.nodes["decision-method-label"].get("x"), scheme.get("x"))
         self.assertEqual(output.text, "Outputs")
         self.assertEqual(request.text, "Plans")
+
+    def test_eight_twin_fields_and_rtm_equations(self):
+        fields = self.nodes["twin-parameter-fields"].get("data-fields").split(",")
+        self.assertEqual(fields, ["K", "Kd", "alpha", "lambda", "lambda_active", "R", "v", "D"])
+        self.assertEqual(len(set(fields)), 8)
+        self.assertEqual(self.nodes["rtm-balance-equation"].text, "dM/dt = −∑F − r")
+        self.assertEqual("".join(self.nodes["rtm-partition-equation"].itertext()), "Cs = Kd Cw")
+        for removed in ["Geometry / initial fields / support", "Time evolution", "Mass checks"]:
+            self.assertNotIn(removed, self.text)
 
     def test_no_external_refs(self):
         for node in self.root.iter():

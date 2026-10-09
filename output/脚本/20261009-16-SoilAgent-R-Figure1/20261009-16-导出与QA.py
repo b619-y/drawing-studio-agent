@@ -80,7 +80,7 @@ def export(repo: Path) -> dict:
         dashed_paths = sum(bool(d.get("dashes")) and not d["dashes"].startswith("[]") for d in drawings)
         fonts = sorted({s["font"] for s in spans})
         # 对精简后右侧独立标签，用最终PDF字体度量检查文字碰撞。
-        right_labels = ["Time evolution", "Mass checks", "CONC", "COST", "FLUX", "Outputs", "Plans", "Candidate schemes"]
+        right_labels = ["CONC", "COST", "FLUX", "Outputs", "Plans", "Candidate schemes"]
         right_rects = {label: page.search_for(label) for label in right_labels}
         collisions = []
         for index, first in enumerate(right_labels):
@@ -98,7 +98,19 @@ def export(repo: Path) -> dict:
                 if any((a & b).get_area() > 0.5 for a in header_rects[first] for b in header_rects[second]):
                     header_collisions.append([first, second])
         visible_text = " ".join(s["text"] for s in spans)
-        removed_labels = ["Conceptualization", "Site reconstruction", "Reaction prediction", "Plan optimization", "Color: CONC", "STRUCTURE DRAFT", "Dashed:", "Conceptual illustration / not to scale"]
+        removed_labels = ["Conceptualization", "Site reconstruction", "Reaction prediction", "Plan optimization", "Color: CONC", "STRUCTURE DRAFT", "Dashed:", "Conceptual illustration / not to scale", "Geometry / initial fields / support", "Time evolution", "Mass checks"]
+        allowed_subscripts = sorted(n.text.strip() for n in root.iter(NS + "tspan") if n.get("dy") == "8")
+        formula_bands = {"balance": (480, 529), "partition": (530, 580)}
+        formula_rects = {}
+        for name, (top, bottom) in formula_bands.items():
+            band = pymupdf.Rect(rect.width * 1100 / 1800, rect.height * top / 820, rect.width * 1450 / 1800, rect.height * bottom / 820)
+            members = [s for s in spans if band.contains(pymupdf.Rect(s["bbox"]))]
+            if members:
+                box = pymupdf.Rect(members[0]["bbox"])
+                for member in members[1:]:
+                    box |= pymupdf.Rect(member["bbox"])
+                formula_rects[name] = box
+        formula_collisions = [[name, label] for name, box in formula_rects.items() for label, boxes in right_rects.items() if any((box & other).get_area() > 0.5 for other in boxes)]
         checks = {
             "svg_unique_ids": True,
             "svg_no_raster_or_filter": True,
@@ -107,7 +119,7 @@ def export(repo: Path) -> dict:
             "pdf_text_present": len(spans) > 20,
             "pdf_text_inside_page": not clipped,
             "pdf_main_labels_minimum_font_7pt": bool(main_spans) and min(s["size"] for s in main_spans) >= 7.0,
-            "pdf_only_time_subscripts_below_7pt": len(small_spans) == 2 and {s["text"].strip() for s in small_spans} == {"0", "1"} and min_font >= 6.0,
+            "pdf_only_native_subscripts_below_7pt": sorted(s["text"].strip() for s in small_spans if s["text"].strip()) == allowed_subscripts and min_font >= 6.0,
             "pdf_arial_bold_no_fallback": all("Arial" in f and "Bold" in f for f in fonts),
             "pdf_dashed_guidance_and_feedback_preserved": dashed_paths >= 2,
             "pdf_right_labels_present_once": all(len(boxes) == 1 for boxes in right_rects.values()),
@@ -115,12 +127,16 @@ def export(repo: Path) -> dict:
             "pdf_model_headers_present_once": header_unique,
             "pdf_model_headers_no_text_collision": not header_collisions,
             "pdf_removed_process_and_figure_notes_absent": all(label not in visible_text for label in removed_labels),
+            "svg_shared_footer_and_divider_absent": "shared-resources" not in ids and not any(n.get("d") == "M60 755 L1740 755" for n in root.iter(NS + "path")),
+            "pdf_shared_footer_absent": "Shared data / tools" not in visible_text,
+            "pdf_rtm_formulas_present": set(formula_rects) == set(formula_bands) and bool(page.search_for("dM/dt")) and bool(page.search_for("∑F")),
+            "pdf_rtm_formulas_no_label_collision": not formula_collisions,
             "pdf_conc_axis_replaces_time": len(right_rects["CONC"]) == 1 and "TIME" not in visible_text,
             "pdf_width_180mm": abs(rect.width * 25.4 / 72 - 180) < 0.01,
             "pdf_height_82mm": abs(rect.height * 25.4 / 72 - 82) < 0.01,
         }
         receipt = {
-            "stage": "structure_draft_model_heading_and_axis_cleanup",
+            "stage": "structure_draft_eight_fields_and_rtm_equations",
             "source": source.relative_to(repo).as_posix(),
             "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
             "backend": f"CairoSVG {cairosvg.__version__}; PyMuPDF {pymupdf.VersionBind} for PDF QA/render",
@@ -140,6 +156,8 @@ def export(repo: Path) -> dict:
             "right_label_collisions": collisions,
             "model_header_boxes_pt": {label: [list(box) for box in boxes] for label, boxes in header_rects.items()},
             "model_header_collisions": header_collisions,
+            "formula_boxes_pt": {name: list(box) for name, box in formula_rects.items()},
+            "formula_label_collisions": formula_collisions,
             "png_size_pixels": [pixmap.width, pixmap.height],
             "not_checked_by_this_script": ["visual_layout", "scientific_acceptance", "drawio_desktop_export", "journal_specific_submission_rules"],
         }

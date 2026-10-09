@@ -1,12 +1,12 @@
 # SoilAgent-R Figure 1：第一阶段结构审阅
 
-任务：[Issue #2](https://github.com/b619-y/drawing-studio-agent/issues/2)。2026-10-09用户认可总体结构，并要求改为yyc字体、安装真正Arial及精简文字。最新要求撤回英文过程标题，改回模型名，CONC放到原TIME轴位置，并删除画面草图提示。当前完成**模型标题与轴标签精简**，仍为待审结构草图，不是正式投稿图，也不关闭Issue。本轮不自动展开真实数据制图。
+任务：[Issue #2](https://github.com/b619-y/drawing-studio-agent/issues/2)。2026-10-09用户认可总体结构，并要求改为yyc字体、安装真正Arial及精简文字。当前按最新要求删除底部资源条，将Twin下方改为8个参数场符号、RTM下方改为守恒与相平衡公式；沿用模型标题与CONC轴。仍为待审结构草图，不是正式投稿图，也不关闭Issue。本轮不自动展开真实数据制图。
 
 ## 本轮设计
 
 主线只出现一次：Auto-ETL → CSM ⇢ Digital Twin → RTM ↔ Decision/MOPSO。Twin占主要视觉宽度，以概念分层块体作为唯一主要焦点；其余是白底线稿。CSM→Twin是方法依据而非自动接口，用虚线表达。RTM与MOPSO的双向箭头分别表示候选请求与模型响应。
 
-Twin没有真实尺度、井位或浓度色标，概念/非等比例说明移至caption和SVG描述。Decision保留CONC、COST、FLUX空三维坐标，不画随机点、伪造前沿或最优标记；TIME仍是第四优化目标，但不在这份空坐标示意中显示，不新增颜色映射。顶部虚线只表示用户重新设目标；底部资源条不画为Agent。第5层不在图中。删除画面提示不意味着科学状态升级。
+Twin没有真实尺度、井位或浓度色标，概念/非等比例说明移至caption和SVG描述。Decision保留CONC、COST、FLUX空三维坐标，不画随机点、伪造前沿或最优标记；TIME仍是第四优化目标，但不在这份空坐标示意中显示，不新增颜色映射。顶部虚线只表示用户重新设目标；底部资源条及分隔横线按最新用户要求删除，数据底座的实际职责不变。第5层不在图中。删除画面提示不意味着科学状态升级。
 
 草图默认180 mm整宽、82 mm高，主标签至少7 pt；通用两栏整宽草图，不宣称符合某个期刊最新投稿规范。
 
@@ -25,11 +25,11 @@ Twin没有真实尺度、井位或浓度色标，概念/非等比例说明移至
 
 按`scansci-svg`局部编辑规范，保护0/1/2、Arial Bold、配色、模型符号和三轴几何，仅调整右侧说明与交互线的布局：
 
-- RTM的`Time evolution`、`Mass checks`集中在其图形下方；Decision保留空坐标，`Color: CONC`按最新要求删除。
+- RTM的原`Time evolution`、`Mass checks`按最新要求替换为守恒和相平衡公式；Decision保留空坐标，`Color: CONC`已删除。
 - 两条交互箭头集中在独立下方带：`Outputs`表示RTM模型响应，`Plans`表示MOPSO候选请求，方向不变。
 - `Candidate schemes`归入Decision下方；门控状态说明放在caption/依据表，不挤在图面。
 - 空坐标状态未改变，无候选点声明保留于SVG描述、caption及文档；没有因删减画面文字而增加虚构数据。
-- 最终PDF的八个右侧独立标签（含三轴标签）各出现一次，文字包围盒无碰撞；仍需目视判断箭头、轴及图形间的整体关系。
+- 最终PDF六个右侧独立标签（含三轴标签）各出现一次；两行公式另作包围盒检查，与标签无碰撞。仍需目视判断箭头、轴及图形间的整体关系。
 
 ## 模型标题与轴标签精简（当前版）
 
@@ -38,6 +38,22 @@ Twin没有真实尺度、井位或浓度色标，概念/非等比例说明移至
 继续按`scansci-svg`局部编辑规范保留原生可编辑文字；图形、箭头、配色、Arial Bold及模型能力不变。删除`Color: CONC`，在原TIME坐标标签的位置放`CONC`。这只是CONC/COST/FLUX三维空占位投影的展示修改，不删减四目标计算中的TIME。
 
 删除画面上的`STRUCTURE DRAFT`、虚线解释及`Conceptual illustration / not to scale`。概念、非等比例、非实测、无真实候选点、待审状态及虚线含义留在caption/README/SVG描述中；关系XML仍仅记录实施模块关系，不作为新版排版复刻。
+
+随后按用户截图，仅删除`shared-resources`整组（底部`Shared data / tools`文字与分隔横线），其余SVG节点及画幅不变；不删除实际共用数据/工具，也不重算科学结果。
+
+## 八参数与RTM公式（本轮）
+
+Twin下方列`K、K_d、α、λ、λ_active、R、v、D`，来自`2-数字孪生/skill/scripts/build_twin.py:143–146,351–425,707–714`登记的七个常规参数场加一个扩展场。只列名称，不抄历史清单里的数值。它们不是八个独立实测标量：`R/v/D`属于派生场，`v/D`可标为deferred；`λ_active`是情景增强场，不等同于所有路线的恒定反应速率，也不宣称已批准替换正式RTM输入。
+
+RTM下方用当前direct RTM的局部守恒与线性相平衡关系：
+
+\[
+\frac{dM}{dt}=-\sum_f F_f-r,\qquad C_s=K_d C_w.
+\]
+
+`M`为控制体总Cr(VI)库存（mg），`F_f`为有符号向外面质量率（mg/d，含对流与弥散），`r`为净反应质量率（mg/d）；`C_s`只指吸附相（mg/kg），不是土壤总浓度，`C_w`为水相（mg/L），`K_d`用L/kg。依据为`3-rtm模拟/skill/scripts/rtm_mopso/mass_conservative_solver.py:215–226,547–634,815–875`。该图展示半离散守恒关系，不替代实际算子分裂、正性处理及独立质量账本；`r`由实际路线、有限容量和作用窗口决定，未将工程反应压成持续恒定`λ_active`。
+
+公式保留原生可编辑文字，参数与相平衡下标采用`tspan`；按真正Arial Bold字宽确定起点，不对每个下标片段单独居中。无科学代码或数据改写。
 
 ## 成果与来源
 
@@ -53,8 +69,8 @@ Twin没有真实尺度、井位或浓度色标，概念/非等比例说明移至
 
 自动检查包括SVG唯一ID、五模块唯一、禁止位图/随机点/额外Agent、箭头拓扑、原生文字、PDF物理尺寸/无图像对象、字体及虚线保留、重新渲染及源码SHA。实际回执见[QA JSON](20261009-16-结构草图-QA.json)。
 
-- 17项回归测试通过，包含单行模型标题、删除画面注记、CONC替换TIME轴位置及元数据状态保留；scansci结构检查通过。最终PDF五个模型标题及八个右侧标签各出现一次、文字包围盒无碰撞，已删文字未残留。关系XML未改，上一轮drawio严格检查0错误、0警告仍适用于原文件，本轮不重复桌面导出。
-- PDF为180×82 mm，原生矢量、无图像对象；仅使用`Arial-BoldMT`。主体文字最小7.37 pt，两个时间下标6.24 pt；字体子集嵌入，两条虚线确实保留，所有可见字符都有Arial字形。
+- 19项回归测试通过，包含模型标题、画面注记/资源条删除、CONC轴位置、元数据状态保留、八参数与两行公式；scansci结构检查通过。最终PDF五个模型标题及六个右侧标签各出现一次、文字包围盒无碰撞，公式与标签无碰撞，已删文字未残留。关系XML未改，上一轮drawio严格检查0错误、0警告仍适用于原文件，本轮不重复桌面导出。
+- PDF为180×82 mm，原生矢量、无图像对象；仅使用`Arial-BoldMT`。主体文字最小7.37 pt，原生下标6.24 pt；字体子集嵌入，两条虚线确实保留，所有可见字符都有Arial字形。
 - 最终PNG由最终PDF重渲染；绘制者已目视核对字体、虚线、箭头、留白及无明显遮挡/裁切。独立只读复核未发现新的实质科学语义问题。
 - 未执行：draw.io桌面导出/交互编辑、特定期刊投稿规格检查、实体打印审阅；正式科学验收仍待进行。自动检查不能代替这些环节。
 
@@ -80,3 +96,5 @@ scansci与drawio检查器由执行环境提供，不拷贝第三方脚本进此P
 ## English caption（结构草图）
 
 **Figure 1. Evidence-grounded architecture of SoilAgent-R (structure draft pending review).** Site information is organized through Auto-ETL, a conceptual site model (CSM), three-dimensional digital-twin construction, reactive transport modelling (RTM), and multi-objective decision support (MOPSO). The CSM-to-twin connection represents methodological guidance rather than a claimed automated file interface. The Outputs and Plans links denote RTM model responses and MOPSO candidate requests, respectively. The four objectives are concentration (CONC), cumulative transport (FLUX), cost (COST), and engineering duration (TIME). The empty CONC/COST/FLUX axes are a layout placeholder without candidate points; TIME remains a fourth optimization objective but is not displayed in this placeholder. No objective-to-color mapping is shown. Candidate schemes remain screening-level and subject to formal evaluation gates, not validated engineering optima. The conceptual block is not to scale and does not encode measured concentrations. Dashed feedback denotes user revision of goals, not an autonomous real-time control loop. New reconstruction candidates are currently No-Go for replacing the retained RTM input.
+
+The eight symbols below the twin identify documented parameter-field groups, including derived and scenario-dependent fields, not eight independently measured quantities. The RTM equations denote control-volume mass balance and equilibrium partitioning: M is total cell Cr(VI) mass, F is signed outward face mass rate, r is net reaction mass rate, and C_s and C_w are sorbed and aqueous concentrations. Engineering reaction rates retain their applicable capacity and time-window constraints.

@@ -49,7 +49,10 @@
         <path d="M716 332 C750 315 838 314 858 334 C882 343 917 337 934 350 C955 371 898 381 852 372 C814 356 765 378 736 365 C718 357 703 346 716 332 Z" fill="#dbe8e6" stroke="#7b9b96"/>
         <path d="M715 404 C744 393 799 397 819 416 C848 426 866 415 885 435 C900 460 867 486 841 481 C804 464 778 481 748 465 C719 446 733 426 715 404 Z" fill="#e5eeec" stroke="#91aaa5"/>
       </g>
-      <text x="850" y="600" text-anchor="middle">Geometry / initial fields / support</text>
+      <g id="twin-parameter-fields" data-fields="K,Kd,alpha,lambda,lambda_active,R,v,D">
+        <text id="twin-fields-row-1" x="787.61" y="600" data-center-x="850" text-anchor="start">K, K<tspan font-size="22" dy="8">d</tspan><tspan dy="-8">, α, λ</tspan></text>
+        <text id="twin-fields-row-2" x="763.90" y="638" data-center-x="850" text-anchor="start">λ<tspan font-size="22" dy="8">active</tspan><tspan dy="-8">, R, v, D</tspan></text>
+      </g>
     </g>
     <g id="rtm" data-role="module" data-width="210">
       <text id="rtm-method-label" data-role="module-title" x="1275" y="244" text-anchor="middle" font-size="31">3 RTM</text>
@@ -63,8 +66,8 @@
       </g>
       <text id="rtm-time-0" x="1317" y="343" data-time-index="0">t<tspan font-size="22" dy="8">0</tspan></text>
       <text id="rtm-time-1" x="1317" y="426" data-time-index="1">t<tspan font-size="22" dy="8">1</tspan></text>
-      <text id="rtm-summary-time" x="1275" y="510" text-anchor="middle">Time evolution</text>
-      <text id="rtm-summary-mass" x="1275" y="550" text-anchor="middle">Mass checks</text>
+      <text id="rtm-balance-equation" data-law="cell-mass-balance" x="1275" y="510" text-anchor="middle">dM/dt = −∑F − r</text>
+      <text id="rtm-partition-equation" data-law="linear-equilibrium-partition" x="1207.02" y="550" data-center-x="1275" text-anchor="start">C<tspan font-size="22" dy="8">s</tspan><tspan dy="-8"> = K</tspan><tspan font-size="22" dy="8">d</tspan><tspan dy="-8"> C</tspan><tspan font-size="22" dy="8">w</tspan></text>
     </g>
     <g id="decision" data-role="module" data-width="300">
       <text id="decision-method-label" data-role="module-title" x="1590" y="244" text-anchor="middle" font-size="31">4 MOPSO</text>
@@ -104,10 +107,6 @@
       <path d="M1590 675 L1590 692" stroke="#56616a" stroke-width="2" fill="none"/>
       <polygon points="1590,700 1583,687 1597,687" fill="#56616a"/>
       <text id="candidate-schemes-label" x="1590" y="733" text-anchor="middle">Candidate schemes</text>
-    </g>
-    <g id="shared-resources" data-role="resources">
-      <path d="M60 755 L1740 755" stroke="#ccd4d8" stroke-width="2"/>
-      <text x="60" y="790" fill="#66717a">Shared data / tools: site data · parameters · remediation literature · RTM / MOPSO</text>
     </g>
   </g>
 </svg>
