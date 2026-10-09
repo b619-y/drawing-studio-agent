@@ -98,6 +98,9 @@ def export(repo: Path) -> dict:
         header_labels = ["Auto-ETL", "CSM", "Digital twin", "RTM", "MOPSO"]
         header_rects = {label: page.search_for(label, clip=header_clip) for label in header_labels}
         header_unique = all(len(boxes) == 1 for boxes in header_rects.values())
+        decision_title_gap = None
+        if len(header_rects["MOPSO"]) == 1 and len(right_rects["FLUX"]) == 1:
+            decision_title_gap = right_rects["FLUX"][0].y0 - header_rects["MOPSO"][0].y1
         header_collisions = []
         for index, first in enumerate(header_labels):
             for second in header_labels[index + 1:]:
@@ -169,6 +172,7 @@ def export(repo: Path) -> dict:
             "pdf_right_labels_no_text_collision": not collisions,
             "pdf_model_headers_present_once": header_unique,
             "pdf_model_headers_no_text_collision": not header_collisions,
+            "pdf_mopso_title_axes_gap_at_least_2mm": decision_title_gap is not None and decision_title_gap >= 72 * 2 / 25.4,
             "svg_four_agent_scopes_cover_five_modules": agent_mappings == expected_agent_mappings and len(agent_groups) == 4,
             "pdf_agent_labels_fit_header_frames": len(agent_fit) == 4 and all(agent_fit),
             # 按最终PDF字形包围盒，框底至模型名至少留2 mm，而非按文字基线估距。
@@ -190,7 +194,7 @@ def export(repo: Path) -> dict:
             "pdf_height_63mm": abs(rect.height * 25.4 / 72 - 63) < 0.01,
         }
         receipt = {
-            "stage": "structure_draft_numbered_agent_scopes_spaced_model_labels",
+            "stage": "structure_draft_spaced_mopso_axes",
             "source": source.relative_to(repo).as_posix(),
             "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
             "backend": f"CairoSVG {cairosvg.__version__}; PyMuPDF {pymupdf.VersionBind} for PDF QA/render",
@@ -210,6 +214,7 @@ def export(repo: Path) -> dict:
             "right_label_collisions": collisions,
             "model_header_boxes_pt": {label: [list(box) for box in boxes] for label, boxes in header_rects.items()},
             "model_header_collisions": header_collisions,
+            "mopso_title_axes_gap_mm": None if decision_title_gap is None else decision_title_gap * 25.4 / 72,
             "agent_responsibility_mapping": agent_mappings,
             "agent_step_indices": {group.get("id"): group.get("data-step-indices") for group in agent_groups},
             "agent_frame_to_model_label_gaps_pt": agent_header_gaps,

@@ -99,7 +99,7 @@
     </g>
     <g id="decision" data-role="module" data-width="300">
       <text id="decision-method-label" data-role="module-title" x="1640" y="220" text-anchor="middle" font-size="31">MOPSO</text>
-      <g id="decision-axes" data-state="empty-placeholder" stroke="#66717a" stroke-width="2" fill="none">
+      <g id="decision-axes" data-state="empty-placeholder" transform="translate(0 30)" stroke="#66717a" stroke-width="2" fill="none">
         <path d="M1545 417 L1725 459 M1545 417 L1627 342 M1545 417 L1545 280"/>
         <polygon points="1732,461 1720,451 1716,465" fill="#66717a" stroke="none"/>
         <polygon points="1634,336 1618,340 1628,351" fill="#66717a" stroke="none"/>

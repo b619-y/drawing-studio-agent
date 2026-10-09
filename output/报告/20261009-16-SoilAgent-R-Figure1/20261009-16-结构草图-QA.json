@@ -1,7 +1,7 @@
 {
-  "stage": "structure_draft_numbered_agent_scopes_spaced_model_labels",
+  "stage": "structure_draft_spaced_mopso_axes",
   "source": "output/图/20261009-16-SoilAgent-R-Figure1/20261009-16-系统架构-结构草图.svg",
-  "source_sha256": "c7e9b3c9b9213464801397fb3885e4fca2867caaae5b7e0e21c46bcc0dc60d09",
+  "source_sha256": "919719471ce7494b354b9040f146a6593a52e5363896432b9ce43f2933d6d5e9",
   "backend": "CairoSVG 2.9.1; PyMuPDF 1.28.0 for PDF QA/render",
   "typography": {
     "style": "yyc_typography_only",
@@ -30,6 +30,7 @@
     "pdf_right_labels_no_text_collision": true,
     "pdf_model_headers_present_once": true,
     "pdf_model_headers_no_text_collision": true,
+    "pdf_mopso_title_axes_gap_at_least_2mm": true,
     "svg_four_agent_scopes_cover_five_modules": true,
     "pdf_agent_labels_fit_header_frames": true,
     "pdf_agent_frames_model_labels_spacing": true,
@@ -65,25 +66,25 @@
     "CONC": [
       [
         477.63671875,
-        133.076171875,
+        141.583984375,
         499.3268737792969,
-        141.30117797851562
+        149.80899047851562
       ]
     ],
     "COST": [
       [
         465.44921875,
-        86.306640625,
+        94.810546875,
         485.9012145996094,
-        94.53164672851562
+        103.03555297851562
       ]
     ],
     "FLUX": [
       [
         428.06640625,
-        64.763671875,
+        73.267578125,
         447.28759765625,
-        72.98867797851562
+        81.49258422851562
       ]
     ],
     "Outputs": [
@@ -155,6 +156,7 @@
     ]
   },
   "model_header_collisions": [],
+  "mopso_title_axes_gap_mm": 3.1926937950981986,
   "agent_responsibility_mapping": {
     "site-agent": "etl,csm",
     "twin-agent": "twin",

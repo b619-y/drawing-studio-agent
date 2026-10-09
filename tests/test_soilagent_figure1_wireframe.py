@@ -87,6 +87,7 @@ class WireframeTests(unittest.TestCase):
     def test_empty_decision_axes(self):
         axes = self.nodes["decision-axes"]
         self.assertEqual(axes.get("data-state"), "empty-placeholder")
+        self.assertEqual(axes.get("transform"), "translate(0 30)")
         self.assertFalse(any(n.tag in {NS + "circle", NS + "ellipse", NS + "image"} for n in axes.iter()))
         self.assertIn("Decision axes contain no candidate data", self.root.find(NS + "desc").text)
         axis_text = " ".join("".join(n.itertext()) for n in axes.iter(NS + "text"))
